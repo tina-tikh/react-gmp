@@ -7,7 +7,7 @@ function Greeting(): ReactElement {
     return <div>{greetings[randomIndex(greetings.length)]}!</div>;
 }
 
-function randomIndex(length): number {
+function randomIndex(length: number): number {
     return Math.floor(Math.random() * length);
 }
 
