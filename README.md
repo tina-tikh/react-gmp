@@ -17,7 +17,7 @@ npm install
 ## Usage
 
 ```sh
-npm run build & npm run start
+npm run build:dev
 ```
 
 ## Run tests
