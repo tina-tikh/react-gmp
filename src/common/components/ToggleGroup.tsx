@@ -65,7 +65,7 @@ class ToggleGroup extends React.PureComponent<ToggleGroupProps, ToggleGroupState
     }
 
     getClassName(item: string): string {
-        return item == this.state.value ? "active" : "";
+        return item === this.state.value ? "active" : "";
     }
 
     handleOnClick(item: string): void {

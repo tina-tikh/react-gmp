@@ -11,6 +11,7 @@ import ActionBarCaption from '../common/components/ActionBarCaption';
 import SearchCaption from './SearchCaption';
 import FilmList from '../common/components/FilmList';
 import SearchHeader from './SearchHeader';
+import MainMessage from '../common/components/MainMessage';
 
 type SearchProps = {}
 type SearchState = {
@@ -24,10 +25,7 @@ class Search extends React.Component<SearchProps, SearchState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            searchResult: {
-                data: [],
-                total: 0
-            }
+            searchResult: movies
         };
     }
 
@@ -56,6 +54,9 @@ class Search extends React.Component<SearchProps, SearchState> {
                 </ActionBar>
                 <FilmList films={res.data}>
                 </FilmList>
+                {
+                    res.total === 0 && <MainMessage>No films found</MainMessage>
+                }
             </Main>
         </React.Fragment>;
     }
@@ -69,10 +70,13 @@ class Search extends React.Component<SearchProps, SearchState> {
     }
 
     handleSubmit(e: string) {
-        this.setState({
-            searchResult: movies
-        });
         console.error("TODO: implement search", e);
+        this.setState({
+            searchResult: {
+                data: [],
+                total: 0
+            }
+        });
     }
 }
 

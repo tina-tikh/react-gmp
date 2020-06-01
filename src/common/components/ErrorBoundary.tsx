@@ -1,36 +1,46 @@
 import * as React from 'react';
 import {ErrorInfo} from 'react';
+
 import Main from './Main';
 import styled from '../styled';
+import MainMessage from './MainMessage';
 
 type ErrorBoundaryState = {
-    hasError: boolean
+    error: Error,
+    errorInfo: ErrorInfo
 }
 
-const ErrorMessage = styled.h1`
-    margin: 3rem;
-    text-align: center;
-    font-size: 3rem;
+const ErrorDetails = styled.section`
+    margin: 2rem;
+    font-size: 2rem;
 `;
 
 export class ErrorBoundary extends React.Component<Object, ErrorBoundaryState> {
     constructor(props: Object) {
         super(props);
-        this.state = { hasError: false };
-    }
-
-    static getDerivedStateFromError(error: Error) {
-        return { hasError: true };
+        this.state = {
+            error: null,
+            errorInfo: null
+        };
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        console.error(error);
+        this.setState({
+            error,
+            errorInfo
+        });
     }
 
     render() {
-        if (this.state.hasError) {
+        if (this.state.error !== null) {
             return <Main>
-                <ErrorMessage>Something went wrong.</ErrorMessage>
+                <MainMessage>Oops! Something went wrong</MainMessage>
+                <ErrorDetails>
+                    {this.state.error?.toString()}
+                </ErrorDetails>
+                <ErrorDetails>
+                    {this.state.errorInfo.componentStack}
+                </ErrorDetails>
             </Main>;
         }
 

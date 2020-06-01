@@ -6,7 +6,7 @@ const ActionBar = styled.section`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 8.5rem;
+    padding: 2rem 6rem;
     background-color: ${props => props.theme.colors.dark};
 `;
 
