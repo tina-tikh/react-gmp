@@ -1,12 +1,12 @@
 export type Theme = {
     colors: {
-        primary: string,
-        secondary: string,
-        light: string,
-        dark: string,
-        darker: string,
-        darkest: string
-    }
+        primary: string;
+        secondary: string;
+        light: string;
+        dark: string;
+        darker: string;
+        darkest: string;
+    };
 };
 
 const theme: Theme = {
@@ -16,7 +16,7 @@ const theme: Theme = {
         light: '#fff',
         dark: '#555',
         darker: '#424242',
-        darkest: '#232323'
+        darkest: '#232323',
     },
 };
 

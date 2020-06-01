@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Movie} from '../common/models/movie';
+import { Movie } from '../common/models/movie';
 import styled from '../common/styled';
 
 type FilmDetailsProps = {
     film: Movie;
-}
+};
 
 const Poster = styled.img`
     float: left;
@@ -27,15 +27,15 @@ const Vote = styled.span`
     line-height: 5.2rem;
     font-size: 2.5rem;
     font-weight: normal;
-    color: ${props => props.theme.colors.secondary};
-    border: 1px solid ${props => props.theme.colors.light};
+    color: ${(props) => props.theme.colors.secondary};
+    border: 1px solid ${(props) => props.theme.colors.light};
 `;
 
 const Info = styled.div`
     margin: 2rem;
     font-size: 2rem;
-    color: ${props => props.theme.colors.primary};
-    
+    color: ${(props) => props.theme.colors.primary};
+
     span + span {
         margin-left: 2rem;
     }
@@ -48,20 +48,24 @@ const Overview = styled.div`
 
 class FilmDetails extends React.Component<FilmDetailsProps> {
     render() {
-        return <div>
-            <Poster src={this.props.film.poster_path}/>
+        return (
             <div>
-                <Title>
-                    {this.props.film.title}
-                    <Vote>{this.props.film.vote_average}</Vote>
-                </Title>
-                <Info>
-                    <span>{this.getYear(this.props.film.release_date)}</span>
-                    <span>{this.props.film.runtime}</span>
-                </Info>
-                <Overview>{this.props.film.overview}</Overview>
+                <Poster src={this.props.film.poster_path} />
+                <div>
+                    <Title>
+                        {this.props.film.title}
+                        <Vote>{this.props.film.vote_average}</Vote>
+                    </Title>
+                    <Info>
+                        <span>
+                            {this.getYear(this.props.film.release_date)}
+                        </span>
+                        <span>{this.props.film.runtime}</span>
+                    </Info>
+                    <Overview>{this.props.film.overview}</Overview>
+                </div>
             </div>
-        </div>;
+        );
     }
 
     getYear(date: string): number {

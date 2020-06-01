@@ -6,14 +6,16 @@ import styled from '../styled';
 const FooterBlock = styled.footer`
     padding: 2.5rem;
     text-align: center;
-    background-color: ${props => props.theme.colors.dark};
+    background-color: ${(props) => props.theme.colors.dark};
 `;
 
 class Footer extends React.PureComponent {
     render() {
-        return <FooterBlock>
-            <Logo></Logo>
-        </FooterBlock>;
+        return (
+            <FooterBlock>
+                <Logo></Logo>
+            </FooterBlock>
+        );
     }
 }
 

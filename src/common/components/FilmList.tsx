@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {ReactNode} from 'react';
+import { ReactNode } from 'react';
 
-import {Movie} from '../models/movie';
+import { Movie } from '../models/movie';
 import FilmCard from './FilmCard';
 import styled from '../styled';
 
 type FilmListProps = {
     films: Movie[];
-}
+};
 
 const List = styled.ul`
     list-style-type: none;
@@ -21,11 +21,15 @@ const ListItem = styled.li`
 
 class FilmList extends React.Component<FilmListProps> {
     render(): ReactNode {
-        return <List>
-            {this.props.films.map((film: Movie) => <ListItem key={film.id}>
-                <FilmCard film={film}/>
-            </ListItem>)}
-        </List>
+        return (
+            <List>
+                {this.props.films.map((film: Movie) => (
+                    <ListItem key={film.id}>
+                        <FilmCard film={film} />
+                    </ListItem>
+                ))}
+            </List>
+        );
     }
 }
 

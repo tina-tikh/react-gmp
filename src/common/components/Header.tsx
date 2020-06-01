@@ -5,16 +5,18 @@ import Logo from './Logo';
 
 const HeaderBlock = styled.header`
     padding: 3rem 6rem;
-    color: ${props => props.theme.colors.light};
-    background-color: ${props => props.theme.colors.darkest};
+    color: ${(props) => props.theme.colors.light};
+    background-color: ${(props) => props.theme.colors.darkest};
 `;
 
 class Header extends React.PureComponent {
     render() {
-        return <HeaderBlock>
-            <Logo></Logo>
-            {this.props.children}
-        </HeaderBlock>;
+        return (
+            <HeaderBlock>
+                <Logo></Logo>
+                {this.props?.children}
+            </HeaderBlock>
+        );
     }
 }
 

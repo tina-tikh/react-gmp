@@ -1,24 +1,25 @@
 import * as React from 'react';
-import {ReactNode} from 'react';
-import {Link} from 'react-router-dom';
+import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
-import {Movie} from '../models/movie';
+import { Movie } from '../models/movie';
 import styled from '../styled';
 
 type FilmCardProps = {
     film: Movie;
-}
+};
 
 const ListItem = styled(Link)`
     display: inline-block;
     width: 26rem;
     height: 50rem;
     margin: 4rem 3rem;
-    color: ${props => props.theme.colors.light};
+    color: ${(props) => props.theme.colors.light};
     text-decoration: none;
-    
-    &:active, &:visited {
-        color: ${props => props.theme.colors.light};
+
+    &:active,
+    &:visited {
+        color: ${(props) => props.theme.colors.light};
     }
 `;
 
@@ -46,14 +47,16 @@ const Year = styled.span`
 
 class FilmCard extends React.Component<FilmCardProps> {
     render(): ReactNode {
-        return <ListItem to={`/film/${this.props.film.id}`}>
-            <Poster src={this.props.film.poster_path}/>
-            <Info>
-                <Year>{this.getYear(this.props.film.release_date)}</Year>
-                <Title>{this.props.film.title}</Title>
-                <span>{this.props.film.genres[0]}</span>
-            </Info>
-        </ListItem>;
+        return (
+            <ListItem to={`/film/${this.props.film.id}`}>
+                <Poster src={this.props.film.poster_path} />
+                <Info>
+                    <Year>{this.getYear(this.props.film.release_date)}</Year>
+                    <Title>{this.props.film.title}</Title>
+                    <span>{this.props.film.genres[0]}</span>
+                </Info>
+            </ListItem>
+        );
     }
 
     getYear(date: string): number {

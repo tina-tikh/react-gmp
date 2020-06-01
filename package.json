@@ -6,6 +6,7 @@
     "test": "jest",
     "clean": "rimraf dist",
     "lint": "eslint 'src/**/**.ts*'",
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\"",
     "build:dev": "webpack-dev-server -w",
     "build:prod": "cross-env NODE_ENV=production webpack -p",
     "server": "node server.js"
@@ -27,7 +28,9 @@
     "eslint": "^7.1.0",
     "eslint-plugin-react": "^7.20.0",
     "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
     "jest": "^26.0.1",
+    "prettier": "^2.0.5",
     "style-loader": "^1.2.1",
     "typescript": "3.7.5",
     "url-loader": "^4.1.0",
@@ -44,5 +47,10 @@
     "react-router": "5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "4.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run format"
+    }
   }
 }

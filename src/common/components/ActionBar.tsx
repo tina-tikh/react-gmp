@@ -7,7 +7,7 @@ const ActionBar = styled.section`
     justify-content: space-between;
     align-items: center;
     padding: 2rem 6rem;
-    background-color: ${props => props.theme.colors.dark};
+    background-color: ${(props) => props.theme.colors.dark};
 `;
 
 export default ActionBar;
