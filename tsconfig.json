@@ -11,7 +11,9 @@
       "es5",
       "es6",
       "dom"
-    ]
+    ],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "./src/**/*"

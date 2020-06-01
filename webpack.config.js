@@ -10,6 +10,7 @@ module.exports = {
     devtool: IS_DEV && 'inline-source-map',
     entry: './src/index',
     output: {
+        publicPath: "/",
         path: path.resolve(__dirname, './dist'),
         filename: `[name].js`
     },
@@ -84,6 +85,7 @@ module.exports = {
         overlay: IS_DEV,
         open: IS_DEV,
         openPage: `http://localhost:${WEBPACK_PORT}`,
+        historyApiFallback: true
     },
     externals: {
         react: 'React',
