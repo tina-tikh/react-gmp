@@ -6,14 +6,17 @@ import Search from './search/Search';
 import Footer from './common/components/Footer';
 import Page from './common/components/Page';
 import Film from './film/Film';
+import {ErrorBoundary} from './common/components/ErrorBoundary';
 
 class App extends React.Component<any, any> {
     render(): ReactNode {
         return <Page>
-            <Switch>
-                <Route path='/film/:id' component={Film}/>
-                <Route path='/' component={Search}/>
-            </Switch>
+            <ErrorBoundary>
+                <Switch>
+                    <Route path='/film/:id' component={Film}/>
+                    <Route path='/' component={Search}/>
+                </Switch>
+            </ErrorBoundary>
             <Footer></Footer>
         </Page>;
     }
