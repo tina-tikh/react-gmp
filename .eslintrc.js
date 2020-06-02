@@ -23,11 +23,11 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    "react/prop-types": [2, {ignore: ['children']}]
+    'react/prop-types': [2, { ignore: ['children'] }],
   },
   settings: {
     react: {
       version: 'detect',
-    }
+    },
   },
 };
