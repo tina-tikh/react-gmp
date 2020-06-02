@@ -30,4 +30,4 @@ npm run test
 
 👤 **Khrystsina Tsikhanovich**
 
-* Github: [@xtinakot](https://github.com/xtinakot)
+- Github: [@xtinakot](https://github.com/xtinakot)
