@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { Component, ReactNode } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { ErrorBoundary, Footer, Page} from './common';
+import { ErrorBoundary, Footer, Page } from './common';
 import { Search } from './search';
 import { Film } from './film';
 
-class App extends React.Component<any, any> {
+class App extends Component {
   render(): ReactNode {
     return (
       <Page>

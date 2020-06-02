@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Component, ReactNode } from 'react';
 
 import { Movie, styled } from '../common';
 
@@ -46,8 +47,8 @@ const Overview = styled.div`
   font-size: 2rem;
 `;
 
-class FilmDetails extends React.Component<FilmDetailsProps> {
-  render() {
+class FilmDetails extends Component<FilmDetailsProps> {
+  render(): ReactNode {
     return (
       <div>
         <Poster src={this.props.film.poster_path} />

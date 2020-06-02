@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { styled } from '../../theme';
 
 const Main = styled.main`

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { PureComponent, ReactNode } from 'react';
 
 import { styled } from '../../theme';
 import Button from './Button';
@@ -41,12 +41,12 @@ const Toggle = styled(Button)`
   }
 `;
 
-class ToggleGroup extends React.PureComponent<ToggleGroupProps> {
+class ToggleGroup extends PureComponent<ToggleGroupProps> {
   render(): ReactNode {
     return (
       <Container>
         <Label>{this.props.label}</Label>
-        {this.props.opts.map((item, i) => (
+        {this.props.opts.map((item) => (
           <Toggle
             key={item}
             className={`${this.getClassName(item)}`}

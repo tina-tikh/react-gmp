@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { Component, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Movie } from '../models';
@@ -48,7 +48,7 @@ const Year = styled.span`
   font-size: 1.4rem;
 `;
 
-class FilmCard extends React.Component<FilmCardProps> {
+class FilmCard extends Component<FilmCardProps> {
   render(): ReactNode {
     return (
       <FilmLink to={`/film/${this.props.film.id}`}>
@@ -77,7 +77,7 @@ const ListItem = styled.li`
   display: inline-block;
 `;
 
-class FilmList extends React.Component<FilmListProps> {
+class FilmList extends Component<FilmListProps> {
   render(): ReactNode {
     return (
       <List>

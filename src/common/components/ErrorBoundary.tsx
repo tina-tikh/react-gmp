@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ErrorInfo } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 import { styled } from '../theme';
 import { Main, MainMessage } from './layout';
@@ -14,7 +14,7 @@ const ErrorDetails = styled.section`
   font-size: 2rem;
 `;
 
-export default class ErrorBoundary extends React.Component<
+export default class ErrorBoundary extends Component<
   unknown,
   ErrorBoundaryState
 > {
@@ -26,14 +26,14 @@ export default class ErrorBoundary extends React.Component<
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.setState({
       error,
       errorInfo,
     });
   }
 
-  render() {
+  render(): ReactNode {
     if (this.state.error !== null) {
       return (
         <Main>

@@ -22,10 +22,12 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint'],
-  rules: {},
+  rules: {
+    "react/prop-types": [2, {ignore: ['children']}]
+  },
   settings: {
     react: {
       version: 'detect',
-    },
+    }
   },
 };

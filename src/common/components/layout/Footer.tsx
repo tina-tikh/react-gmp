@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { PureComponent, ReactNode } from 'react';
 
 import { styled } from '../../theme';
 import Logo from './Logo';
@@ -9,8 +10,8 @@ const FooterBlock = styled.footer`
   background-color: ${(props) => props.theme.colors.dark};
 `;
 
-class Footer extends React.PureComponent {
-  render() {
+class Footer extends PureComponent {
+  render(): ReactNode {
     return (
       <FooterBlock>
         <Logo></Logo>

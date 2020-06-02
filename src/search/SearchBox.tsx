@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { PureComponent, ReactNode } from 'react';
 
 import { Button, styled } from '../common';
 
@@ -38,7 +39,7 @@ const SearchButton = styled(Button)`
   font-weight: bold;
 `;
 
-class SearchBox extends React.PureComponent<SearchBoxProps, SearchBoxState> {
+class SearchBox extends PureComponent<SearchBoxProps, SearchBoxState> {
   constructor(props: SearchBoxProps) {
     super(props);
     this.state = {
@@ -46,7 +47,7 @@ class SearchBox extends React.PureComponent<SearchBoxProps, SearchBoxState> {
     };
   }
 
-  render() {
+  render(): ReactNode {
     return (
       <Container>
         <Input
@@ -61,13 +62,13 @@ class SearchBox extends React.PureComponent<SearchBoxProps, SearchBoxState> {
     );
   }
 
-  handleSearchValueChange(e: React.ChangeEvent<HTMLInputElement>) {
+  handleSearchValueChange(e: React.ChangeEvent<HTMLInputElement>): void {
     this.setState({
       searchValue: e.target.value,
     });
   }
 
-  handleOnSubmit() {
+  handleOnSubmit(): void {
     this.props.onSubmit(this.state.searchValue);
   }
 }

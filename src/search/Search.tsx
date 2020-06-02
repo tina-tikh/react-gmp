@@ -1,6 +1,16 @@
 import * as React from 'react';
+import { Component, ReactNode } from 'react';
 
-import { ActionBar, ActionBarCaption, FilmList, Header, Main, MainMessage, Movie, ToggleGroup } from '../common';
+import {
+  ActionBar,
+  ActionBarCaption,
+  FilmList,
+  Header,
+  Main,
+  MainMessage,
+  Movie,
+  ToggleGroup,
+} from '../common';
 import movies from '../common/api/movies-mock.json';
 import SearchBox from './SearchBox';
 import SearchCaption from './SearchCaption';
@@ -13,11 +23,11 @@ type SearchState = {
   searchResult: { data: Movie[]; total: number };
 };
 
-class Search extends React.Component<SearchProps, SearchState> {
+class Search extends Component<SearchProps, SearchState> {
   searchByOpts: string[] = ['Title', 'Genre'];
   sortByOpts: string[] = ['Release', 'Rating'];
 
-  constructor(props: any) {
+  constructor(props: SearchProps) {
     super(props);
     this.state = {
       searchByValue: this.searchByOpts[0],
@@ -26,7 +36,7 @@ class Search extends React.Component<SearchProps, SearchState> {
     };
   }
 
-  render() {
+  render(): ReactNode {
     const res = this.state.searchResult;
     return (
       <React.Fragment>
@@ -61,19 +71,19 @@ class Search extends React.Component<SearchProps, SearchState> {
     );
   }
 
-  handleSearchByChange(searchByValue: string) {
+  handleSearchByChange(searchByValue: string): void {
     this.setState({
       searchByValue,
     });
   }
 
-  handleSortByChange(sortByValue: string) {
+  handleSortByChange(sortByValue: string): void {
     this.setState({
       sortByValue,
     });
   }
 
-  handleSubmit(e: string) {
+  handleSubmit(query: string): void {
     this.setState({
       searchResult: {
         data: [],

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { PureComponent, ReactNode } from 'react';
 
 import { styled } from '../../theme';
 import Logo from './Logo';
@@ -9,12 +10,12 @@ const HeaderBlock = styled.header`
   background-color: ${(props) => props.theme.colors.darkest};
 `;
 
-class Header extends React.PureComponent {
-  render() {
+class Header extends PureComponent {
+  render(): ReactNode {
     return (
       <HeaderBlock>
         <Logo></Logo>
-        {this.props?.children}
+        {this.props.children}
       </HeaderBlock>
     );
   }

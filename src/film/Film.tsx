@@ -1,7 +1,15 @@
 import * as React from 'react';
+import { Component, ReactNode } from 'react';
 import { match } from 'react-router-dom';
 
-import { ActionBar, ActionBarCaption, FilmList, Header, Main, Movie } from '../common';
+import {
+  ActionBar,
+  ActionBarCaption,
+  FilmList,
+  Header,
+  Main,
+  Movie,
+} from '../common';
 import movies from '../common/api/movies-mock.json';
 import FilmDetails from './FilmDetails';
 
@@ -14,8 +22,8 @@ type FilmState = {
   similar: Movie[];
 };
 
-class Film extends React.Component<FilmProps, FilmState> {
-  render() {
+class Film extends Component<FilmProps, FilmState> {
+  render(): ReactNode {
     // todo: implement api calls
     const pathId = Number(this.props.match.params.id);
     const film = movies.data.find((movie: Movie) => movie.id === pathId);
