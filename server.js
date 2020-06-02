@@ -7,6 +7,6 @@ const port = process.env.PORT || 3000;
 app.use(express.static(sourceDir));
 
 app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-    console.log(`Serving content from /${sourceDir}/`);
+  console.log(`Server is listening on port ${port}`);
+  console.log(`Serving content from /${sourceDir}/`);
 });

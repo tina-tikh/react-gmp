@@ -7,18 +7,12 @@
     "moduleResolution": "node",
     "target": "es6",
     "jsx": "react",
-    "lib": [
-      "es5",
-      "es6",
-      "dom"
-    ]
+    "lib": ["es5", "es6", "dom"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "awesomeTypescriptLoaderOptions": {
-    "reportFiles": [
-      "./src/**/*"
-    ]
+    "reportFiles": ["./src/**/*"]
   }
 }

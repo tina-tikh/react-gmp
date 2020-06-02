@@ -1,18 +1,25 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core'
 import * as React from 'react';
-import {ReactNode} from 'react';
+import { Component, ReactNode } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const style = css({
-    fontWeight: "bold"
-});
+import { ErrorBoundary, Footer, Page } from './common';
+import { Search } from './search';
+import { Film } from './film';
 
-class App extends React.Component {
-    render(): ReactNode {
-        return <span css={style}>
-            Hello World
-        </span>;
-    }
+class App extends Component {
+  render(): ReactNode {
+    return (
+      <Page>
+        <ErrorBoundary>
+          <Switch>
+            <Route path="/film/:id" component={Film} />
+            <Route path="/" component={Search} />
+          </Switch>
+        </ErrorBoundary>
+        <Footer></Footer>
+      </Page>
+    );
+  }
 }
 
 export default App;
