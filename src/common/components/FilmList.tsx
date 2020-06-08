@@ -51,12 +51,12 @@ const Year = styled.span`
 class FilmCard extends Component<FilmCardProps> {
   render(): ReactNode {
     return (
-      <FilmLink to={`/film/${this.props.film.id}`}>
-        <Poster src={this.props.film.poster_path} />
+      <FilmLink to={`/film/${this.props.film?.id}`}>
+        <Poster src={this.props.film?.poster_path} />
         <Info>
-          <Year>{this.getYear(this.props.film.release_date)}</Year>
-          <Title>{this.props.film.title}</Title>
-          <span>{this.props.film.genres[0]}</span>
+          <Year>{this.getYear(this.props.film?.release_date)}</Year>
+          <Title>{this.props.film?.title}</Title>
+          <span>{this.props.film?.genres[0]}</span>
         </Info>
       </FilmLink>
     );

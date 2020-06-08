@@ -13,7 +13,7 @@ describe("<SearchBox />", () => {
   it("should control input", () => {
     const inputValue = "12345";
     const component = mount(<Page><SearchBox/></Page>);
-    component.find("input").simulate('change', {target: {value: inputValue}});
+    component.find('input').simulate('change', {target: {value: inputValue}});
     expect(component.find(SearchBox).state().searchValue).toEqual(inputValue);
   });
 

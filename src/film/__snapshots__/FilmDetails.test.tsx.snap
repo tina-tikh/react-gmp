@@ -1,26 +1,93 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FilmDetails /> should be rendered 1`] = `
-<div>
-  <Styled(img)
-    src="https://image.tmdb.org/t/p/w500/ldoY4fTZkGISMidNw60GHoNdgP8.jpg"
-  />
-  <div>
-    <Styled(h4)>
-      Guardians of the Galaxy Vol. 3
-      <Styled(span)>
-        0
-      </Styled(span)>
-    </Styled(h4)>
-    <Styled(div)>
-      <span>
-        2020
-      </span>
-      <span />
-    </Styled(div)>
-    <Styled(div)>
-      The third film based on Marvel's Guardians of the Galaxy.
-    </Styled(div)>
-  </div>
-</div>
+<Page>
+  <Styled(article)>
+    <article
+      className="css-mpi3ak"
+    >
+      <ThemeProvider
+        theme={
+          Object {
+            "colors": Object {
+              "dark": "#555",
+              "darker": "#424242",
+              "darkest": "#232323",
+              "light": "#fff",
+              "primary": "#f65261",
+              "secondary": "#a1e66f",
+            },
+          }
+        }
+      >
+        <FilmDetails
+          film={
+            Object {
+              "budget": 0,
+              "genres": Array [
+                "Action",
+                "Adventure",
+                "Science Fiction",
+              ],
+              "id": 447365,
+              "overview": "The third film based on Marvel's Guardians of the Galaxy.",
+              "poster_path": "https://image.tmdb.org/t/p/w500/ldoY4fTZkGISMidNw60GHoNdgP8.jpg",
+              "release_date": "2020-05-01",
+              "revenue": 0,
+              "runtime": null,
+              "tagline": "",
+              "title": "Guardians of the Galaxy Vol. 3",
+              "vote_average": 0,
+              "vote_count": 9,
+            }
+          }
+        >
+          <div>
+            <Styled(img)
+              src="https://image.tmdb.org/t/p/w500/ldoY4fTZkGISMidNw60GHoNdgP8.jpg"
+            >
+              <img
+                className="css-7d2ql6"
+                src="https://image.tmdb.org/t/p/w500/ldoY4fTZkGISMidNw60GHoNdgP8.jpg"
+              />
+            </Styled(img)>
+            <div>
+              <Styled(h4)>
+                <h4
+                  className="css-1ip0kpc"
+                >
+                  Guardians of the Galaxy Vol. 3
+                  <Styled(span)>
+                    <span
+                      className="css-1ccskt5"
+                    >
+                      0
+                    </span>
+                  </Styled(span)>
+                </h4>
+              </Styled(h4)>
+              <Styled(div)>
+                <div
+                  className="css-2lcn7p"
+                >
+                  <span>
+                    2020
+                  </span>
+                  <span />
+                </div>
+              </Styled(div)>
+              <Styled(div)>
+                <div
+                  className="css-1r69hqi"
+                >
+                  The third film based on Marvel's Guardians of the Galaxy.
+                </div>
+              </Styled(div)>
+            </div>
+          </div>
+        </FilmDetails>
+      </ThemeProvider>
+    </article>
+  </Styled(article)>
+</Page>
 `;

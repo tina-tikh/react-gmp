@@ -32,7 +32,7 @@ class Film extends Component<FilmProps, FilmState> {
       this.setState({
         movie,
         similar: movies,
-        genre: movie.genres[0]
+        genre: movie && movie.genres[0]
       });
     });
   }

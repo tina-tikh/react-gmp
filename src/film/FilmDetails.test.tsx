@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
-import { Movie } from '../common';
+import { Movie, Page } from '../common';
 import FilmDetails from './FilmDetails';
 
 describe("<FilmDetails />", () => {
@@ -21,7 +21,7 @@ describe("<FilmDetails />", () => {
   };
 
   it("should be rendered", () => {
-    const component = shallow(<FilmDetails film={film}/>);
+    const component = mount(<Page><FilmDetails film={film}/></Page>);
     expect(component).toMatchSnapshot();
   });
 });
