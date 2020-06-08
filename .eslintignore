@@ -1,0 +1,6 @@
+**/coverage/**
+**/dist/*
+**/node_modules/**
+**/*.d.ts
+**/__testfixtures__/**
+**/__snapshots__/**

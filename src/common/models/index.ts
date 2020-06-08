@@ -1,3 +1,4 @@
 import Movie from './movie';
+import MoviesQueryResponse from './moviesQueryResponse';
 
-export { Movie };
+export { Movie, MoviesQueryResponse };

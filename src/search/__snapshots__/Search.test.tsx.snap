@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Search /> should be rendered 1`] = `
+<Fragment>
+  <Header>
+    <Styled(div)>
+      <Styled(h1)>
+        Find your movie
+      </Styled(h1)>
+      <SearchBox
+        onSubmit={[Function]}
+      />
+      <ToggleGroup
+        label="Search by"
+        onChange={[Function]}
+        opts={
+          Array [
+            "Title",
+            "Genre",
+          ]
+        }
+        value="Title"
+      />
+    </Styled(div)>
+  </Header>
+  <Styled(main)>
+    <Styled(section)>
+      <Styled(span)>
+         movie found
+      </Styled(span)>
+      <ToggleGroup
+        label="Sort by"
+        onChange={[Function]}
+        opts={
+          Array [
+            "Release",
+            "Rating",
+          ]
+        }
+        value="Release"
+      />
+    </Styled(section)>
+    <FilmList />
+  </Styled(main)>
+</Fragment>
+`;

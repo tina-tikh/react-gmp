@@ -9,8 +9,8 @@ import {
   Header,
   Main,
   Movie,
+  MovieService,
 } from '../common';
-import movies from '../common/api/movies-mock.json';
 import FilmDetails from './FilmDetails';
 
 type FilmProps = {
@@ -20,26 +20,34 @@ type FilmProps = {
 type FilmState = {
   movie: Movie;
   similar: Movie[];
+  genre: string
 };
 
 class Film extends Component<FilmProps, FilmState> {
-  render(): ReactNode {
-    // todo: implement api calls
+  componentDidMount(): void {
     const pathId = Number(this.props.match.params.id);
-    const film = movies.data.find((movie: Movie) => movie.id === pathId);
-    const genre = film.genres[0];
-    const similar = movies.data;
 
+    MovieService.retrieveMovies().then(({ data: movies }) => {
+      const movie: Movie = movies.find((movie: Movie) => movie.id === pathId)
+      this.setState({
+        movie,
+        similar: movies,
+        genre: movie.genres[0]
+      });
+    });
+  }
+
+  render(): ReactNode {
     return (
       <React.Fragment>
         <Header>
-          <FilmDetails film={film} />
+          <FilmDetails film={this.state?.movie} />
         </Header>
         <Main>
           <ActionBar>
-            <ActionBarCaption>Films by {genre} genre</ActionBarCaption>
+            <ActionBarCaption>Films by {this.state?.genre} genre</ActionBarCaption>
           </ActionBar>
-          <FilmList films={similar} />
+          <FilmList films={this.state?.similar} />
         </Main>
       </React.Fragment>
     );
