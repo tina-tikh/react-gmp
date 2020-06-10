@@ -68,7 +68,7 @@ class FilmDetails extends Component<FilmDetailsProps> {
   }
 
   getYear(date: string): number {
-    return date && new Date(date).getFullYear();
+    return new Date(date).getFullYear();
   }
 }
 

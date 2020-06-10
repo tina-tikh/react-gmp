@@ -20,7 +20,7 @@ type FilmProps = {
 type FilmState = {
   movie: Movie;
   similar: Movie[];
-  genre: string
+  genre: string;
 };
 
 class Film extends Component<FilmProps, FilmState> {
@@ -28,11 +28,11 @@ class Film extends Component<FilmProps, FilmState> {
     const pathId = Number(this.props.match.params.id);
 
     MovieService.retrieveMovies().then(({ data: movies }) => {
-      const movie: Movie = movies.find((movie: Movie) => movie.id === pathId)
+      const movie: Movie = movies.find((movie: Movie) => movie.id === pathId);
       this.setState({
         movie,
         similar: movies,
-        genre: movie && movie.genres[0]
+        genre: movie.genres[0],
       });
     });
   }
@@ -45,7 +45,9 @@ class Film extends Component<FilmProps, FilmState> {
         </Header>
         <Main>
           <ActionBar>
-            <ActionBarCaption>Films by {this.state?.genre} genre</ActionBarCaption>
+            <ActionBarCaption>
+              Films by {this.state?.genre} genre
+            </ActionBarCaption>
           </ActionBar>
           <FilmList films={this.state?.similar} />
         </Main>

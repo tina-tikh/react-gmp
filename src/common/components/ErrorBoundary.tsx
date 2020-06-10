@@ -36,16 +36,14 @@ export default class ErrorBoundary extends Component<
   render(): ReactNode {
     if (this.state.error !== null) {
       return (
-        <div className="case1">
         <Main>
           <MainMessage>Oops! Something went wrong</MainMessage>
           <ErrorDetails>{this.state.error?.toString()}</ErrorDetails>
           <ErrorDetails>{this.state.errorInfo.componentStack}</ErrorDetails>
         </Main>
-        </div>
       );
     }
 
-    return <div className="case2">this.props.children</div>;
+    return this.props.children;
   }
 }

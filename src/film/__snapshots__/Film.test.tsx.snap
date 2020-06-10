@@ -1,152 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Film /> should be rendered 1`] = `
-<Styled(article)>
-  <ThemeProvider
-    theme={
-      Object {
-        "colors": Object {
-          "dark": "#555",
-          "darker": "#424242",
-          "darkest": "#232323",
-          "light": "#fff",
-          "primary": "#f65261",
-          "secondary": "#a1e66f",
-        },
-      }
-    }
-  >
-    <Film
-      match={
-        Object {
-          "isExact": false,
-          "params": Object {
-            "id": "123",
-          },
-          "path": "",
-          "url": "",
-        }
-      }
-    />
-  </ThemeProvider>
-</Styled(article)>
-`;
-
-exports[`<Film /> should fetch corresponding movie 1`] = `
-<Page>
-  <Styled(article)>
-    <article
-      className="css-mpi3ak"
-    >
-      <ThemeProvider
-        theme={
-          Object {
-            "colors": Object {
-              "dark": "#555",
-              "darker": "#424242",
-              "darkest": "#232323",
-              "light": "#fff",
-              "primary": "#f65261",
-              "secondary": "#a1e66f",
-            },
-          }
-        }
-      >
-        <Film
-          match={
-            Object {
-              "isExact": false,
-              "params": Object {
-                "id": "123",
-              },
-              "path": "",
-              "url": "",
-            }
-          }
-        >
-          <Header>
-            <Styled(header)>
-              <header
-                className="css-t3r2z7"
-              >
-                <Logo>
-                  <Styled(Link)
-                    to="/"
-                  >
-                    <Link
-                      className="css-146to4j"
-                      to="/"
-                    />
-                  </Styled(Link)>
-                </Logo>
-                <FilmDetails>
-                  <div>
-                    <Styled(img)>
-                      <img
-                        className="css-7d2ql6"
-                      />
-                    </Styled(img)>
-                    <div>
-                      <Styled(h4)>
-                        <h4
-                          className="css-1ip0kpc"
-                        >
-                          <Styled(span)>
-                            <span
-                              className="css-1ccskt5"
-                            />
-                          </Styled(span)>
-                        </h4>
-                      </Styled(h4)>
-                      <Styled(div)>
-                        <div
-                          className="css-2lcn7p"
-                        >
-                          <span />
-                          <span />
-                        </div>
-                      </Styled(div)>
-                      <Styled(div)>
-                        <div
-                          className="css-1r69hqi"
-                        />
-                      </Styled(div)>
-                    </div>
-                  </div>
-                </FilmDetails>
-              </header>
-            </Styled(header)>
-          </Header>
-          <Styled(main)>
-            <main
-              className="css-1wufzma"
-            >
-              <Styled(section)>
-                <section
-                  className="css-5719bz"
-                >
-                  <Styled(span)>
-                    <span
-                      className="css-7j8j8h"
-                    >
-                      Films by 
-                       genre
-                    </span>
-                  </Styled(span)>
-                </section>
-              </Styled(section)>
-              <FilmList>
-                <Styled(ul)>
-                  <ul
-                    className="css-17vq9x5"
-                  />
-                </Styled(ul)>
-              </FilmList>
-            </main>
-          </Styled(main)>
-        </Film>
-      </ThemeProvider>
-    </article>
-  </Styled(article)>
-</Page>
+<Fragment>
+  <Header>
+    <FilmDetails />
+  </Header>
+  <Styled(main)>
+    <Styled(section)>
+      <Styled(span)>
+        Films by 
+         genre
+      </Styled(span)>
+    </Styled(section)>
+    <FilmList />
+  </Styled(main)>
+</Fragment>
 `;
