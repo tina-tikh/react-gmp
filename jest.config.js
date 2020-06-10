@@ -6,9 +6,9 @@ module.exports = {
     '!**/vendor/**',
   ],
   coverageThreshold: {
-    "global": {
-      "lines": 80
-    }
+    global: {
+      lines: 80,
+    },
   },
   testMatch: [
     '**/__tests__/**/*.+(ts|tsx|js)',
