@@ -1,18 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Film /> should be rendered 1`] = `
-<Fragment>
-  <Header>
-    <FilmDetails />
-  </Header>
-  <Styled(main)>
-    <Styled(section)>
-      <Styled(span)>
-        Films by 
-         genre
-      </Styled(span)>
-    </Styled(section)>
-    <FilmList />
-  </Styled(main)>
-</Fragment>
+exports[`<Film /> should render a film 1`] = `
+<DocumentFragment>
+  <header
+    class="css-t3r2z7"
+  >
+    <div>
+      <img
+        class="css-7d2ql6"
+      />
+      <div>
+        <h4
+          class="css-1ip0kpc"
+        >
+          <span
+            class="css-1ccskt5"
+          />
+        </h4>
+        <div
+          class="css-2lcn7p"
+        >
+          <span />
+          <span />
+        </div>
+        <div
+          class="css-1r69hqi"
+        />
+      </div>
+    </div>
+  </header>
+  <main
+    class="css-1wufzma"
+  >
+    <section
+      class="css-5719bz"
+    >
+      <span
+        class="css-7j8j8h"
+      >
+        Films by  genre
+      </span>
+    </section>
+    <ul
+      class="css-17vq9x5"
+    />
+  </main>
+</DocumentFragment>
 `;
