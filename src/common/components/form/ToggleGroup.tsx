@@ -5,10 +5,10 @@ import { styled } from '../../theme';
 import Button from './Button';
 
 type ToggleGroupProps = {
-  label: string;
+  label?: string;
   opts: string[];
   value: string;
-  onChange: (i: string) => void;
+  onChange?: (i: string) => void;
 };
 
 const Container = styled.div`
@@ -46,7 +46,7 @@ class ToggleGroup extends PureComponent<ToggleGroupProps> {
     return (
       <Container>
         <Label>{this.props.label}</Label>
-        {this.props.opts.map((item) => (
+        {this.props.opts?.map((item) => (
           <Toggle
             key={item}
             className={`${this.getClassName(item)}`}
@@ -64,7 +64,7 @@ class ToggleGroup extends PureComponent<ToggleGroupProps> {
   }
 
   handleOnClick(item: string): void {
-    this.props.onChange(item);
+    this.props?.onChange(item);
   }
 }
 

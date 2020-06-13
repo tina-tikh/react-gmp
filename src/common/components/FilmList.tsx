@@ -81,7 +81,7 @@ class FilmList extends Component<FilmListProps> {
   render(): ReactNode {
     return (
       <List>
-        {this.props.films.map((film: Movie) => (
+        {this.props.films?.map((film: Movie) => (
           <ListItem key={film.id}>
             <FilmCard film={film} />
           </ListItem>

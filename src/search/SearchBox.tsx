@@ -4,7 +4,7 @@ import { PureComponent, ReactNode } from 'react';
 import { Button, styled } from '../common';
 
 type SearchBoxProps = {
-  onSubmit: (query: string) => void;
+  onSubmit?: (query: string) => void;
 };
 
 type SearchBoxState = {

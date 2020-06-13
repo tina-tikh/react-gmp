@@ -51,17 +51,17 @@ class FilmDetails extends Component<FilmDetailsProps> {
   render(): ReactNode {
     return (
       <div>
-        <Poster src={this.props.film.poster_path} />
+        <Poster src={this.props.film?.poster_path} />
         <div>
           <Title>
-            {this.props.film.title}
-            <Vote>{this.props.film.vote_average}</Vote>
+            {this.props.film?.title}
+            <Vote>{this.props.film?.vote_average}</Vote>
           </Title>
           <Info>
-            <span>{this.getYear(this.props.film.release_date)}</span>
-            <span>{this.props.film.runtime}</span>
+            <span>{this.getYear(this.props.film?.release_date)}</span>
+            <span>{this.props.film?.runtime}</span>
           </Info>
-          <Overview>{this.props.film.overview}</Overview>
+          <Overview>{this.props.film?.overview}</Overview>
         </div>
       </div>
     );

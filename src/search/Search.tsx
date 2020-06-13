@@ -56,7 +56,7 @@ class Search extends Component<SearchProps, SearchState> {
         </Header>
         <Main>
           <ActionBar>
-            <ActionBarCaption>{res.total} movie found</ActionBarCaption>
+            <ActionBarCaption>{res?.total} movie found</ActionBarCaption>
             <ToggleGroup
               label="Sort by"
               value={this.state.sortByValue}
@@ -64,8 +64,8 @@ class Search extends Component<SearchProps, SearchState> {
               onChange={(e: string) => this.handleSortByChange(e)}
             ></ToggleGroup>
           </ActionBar>
-          <FilmList films={res.data} />
-          {res.total === 0 && <MainMessage>No films found</MainMessage>}
+          <FilmList films={res?.data} />
+          {res?.total === 0 && <MainMessage>No films found</MainMessage>}
         </Main>
       </React.Fragment>
     );
