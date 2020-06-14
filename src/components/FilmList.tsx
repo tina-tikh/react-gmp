@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Component, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Movie } from '../models';
 import { styled } from '../theme';
+import { Movie } from '../store/types';
 
 type FilmListProps = {
   films: Movie[];
@@ -81,7 +81,7 @@ class FilmList extends Component<FilmListProps> {
   render(): ReactNode {
     return (
       <List>
-        {this.props.films?.map((film: Movie) => (
+        {this.props.films?.map((film) => (
           <ListItem key={film.id}>
             <FilmCard film={film} />
           </ListItem>

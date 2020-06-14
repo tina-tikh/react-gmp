@@ -1,4 +1,4 @@
-import { styled } from '../common';
+import { styled } from '../../theme';
 
 const SearchCaption = styled.h1`
   margin-bottom: 4rem;

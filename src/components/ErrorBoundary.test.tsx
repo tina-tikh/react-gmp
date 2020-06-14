@@ -2,7 +2,7 @@ import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 
-import { renderWithTheme } from '../../../test';
+import { renderWithTheme } from '../../test';
 import ErrorBoundary from './ErrorBoundary';
 
 describe('<ErrorBoundary/>', () => {

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { PureComponent, ReactNode } from 'react';
 
-import { Button, styled } from '../common';
+import { styled } from '../../theme';
+import { Button } from '../form';
 
 type SearchBoxProps = {
   onSubmit?: (query: string) => void;

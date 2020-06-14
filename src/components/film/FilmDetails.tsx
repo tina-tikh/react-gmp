@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
 
-import { Movie, styled } from '../common';
+import { styled } from '../../theme';
+import { Movie } from '../../store/types';
 
 type FilmDetailsProps = {
   film: Movie;
