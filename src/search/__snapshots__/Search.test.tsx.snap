@@ -1,46 +1,274 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Search /> should be rendered 1`] = `
-<Fragment>
-  <Header>
-    <Styled(div)>
-      <Styled(h1)>
+exports[`<Search /> should handle search filter 1`] = `
+<DocumentFragment>
+  <header
+    class="css-t3r2z7"
+  >
+    <div
+      class="css-1r4e12l"
+    >
+      <h1
+        class="css-sokrpn"
+      >
         Find your movie
-      </Styled(h1)>
-      <SearchBox
-        onSubmit={[Function]}
-      />
-      <ToggleGroup
-        label="Search by"
-        onChange={[Function]}
-        opts={
-          Array [
-            "Title",
-            "Genre",
-          ]
-        }
-        value="Title"
-      />
-    </Styled(div)>
-  </Header>
-  <Styled(main)>
-    <Styled(section)>
-      <Styled(span)>
-         movie found
-      </Styled(span)>
-      <ToggleGroup
-        label="Sort by"
-        onChange={[Function]}
-        opts={
-          Array [
-            "Release",
-            "Rating",
-          ]
-        }
-        value="Release"
-      />
-    </Styled(section)>
-    <FilmList />
-  </Styled(main)>
-</Fragment>
+      </h1>
+      <div
+        class="css-11yzz3q"
+      >
+        <input
+          class="css-1wf26wm"
+          placeholder="Search"
+          value=""
+        />
+        <button
+          class="css-u83ny6"
+        >
+          Search
+        </button>
+      </div>
+      <div
+        class="css-17wzkxm"
+      >
+        <label
+          class="css-1acepui"
+        >
+          Search by
+        </label>
+        <button
+          class=" css-1f5llbs"
+        >
+          Title
+        </button>
+        <button
+          class="active css-1f5llbs"
+        >
+          Genre
+        </button>
+      </div>
+    </div>
+  </header>
+  <main
+    class="css-1wufzma"
+  >
+    <section
+      class="css-5719bz"
+    >
+      <span
+        class="css-7j8j8h"
+      >
+        0 movie found
+      </span>
+      <div
+        class="css-17wzkxm"
+      >
+        <label
+          class="css-1acepui"
+        >
+          Sort by
+        </label>
+        <button
+          class="active css-1f5llbs"
+        >
+          Release
+        </button>
+        <button
+          class=" css-1f5llbs"
+        >
+          Rating
+        </button>
+      </div>
+    </section>
+    <ul
+      class="css-17vq9x5"
+    />
+    <h1
+      class="css-1dglaoy"
+    >
+      No films found
+    </h1>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`<Search /> should handle sort filter 1`] = `
+<DocumentFragment>
+  <header
+    class="css-t3r2z7"
+  >
+    <div
+      class="css-1r4e12l"
+    >
+      <h1
+        class="css-sokrpn"
+      >
+        Find your movie
+      </h1>
+      <div
+        class="css-11yzz3q"
+      >
+        <input
+          class="css-1wf26wm"
+          placeholder="Search"
+          value=""
+        />
+        <button
+          class="css-u83ny6"
+        >
+          Search
+        </button>
+      </div>
+      <div
+        class="css-17wzkxm"
+      >
+        <label
+          class="css-1acepui"
+        >
+          Search by
+        </label>
+        <button
+          class="active css-1f5llbs"
+        >
+          Title
+        </button>
+        <button
+          class=" css-1f5llbs"
+        >
+          Genre
+        </button>
+      </div>
+    </div>
+  </header>
+  <main
+    class="css-1wufzma"
+  >
+    <section
+      class="css-5719bz"
+    >
+      <span
+        class="css-7j8j8h"
+      >
+        0 movie found
+      </span>
+      <div
+        class="css-17wzkxm"
+      >
+        <label
+          class="css-1acepui"
+        >
+          Sort by
+        </label>
+        <button
+          class=" css-1f5llbs"
+        >
+          Release
+        </button>
+        <button
+          class="active css-1f5llbs"
+        >
+          Rating
+        </button>
+      </div>
+    </section>
+    <ul
+      class="css-17vq9x5"
+    />
+    <h1
+      class="css-1dglaoy"
+    >
+      No films found
+    </h1>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`<Search /> should render search 1`] = `
+<DocumentFragment>
+  <header
+    class="css-t3r2z7"
+  >
+    <div
+      class="css-1r4e12l"
+    >
+      <h1
+        class="css-sokrpn"
+      >
+        Find your movie
+      </h1>
+      <div
+        class="css-11yzz3q"
+      >
+        <input
+          class="css-1wf26wm"
+          placeholder="Search"
+          value=""
+        />
+        <button
+          class="css-u83ny6"
+        >
+          Search
+        </button>
+      </div>
+      <div
+        class="css-17wzkxm"
+      >
+        <label
+          class="css-1acepui"
+        >
+          Search by
+        </label>
+        <button
+          class="active css-1f5llbs"
+        >
+          Title
+        </button>
+        <button
+          class=" css-1f5llbs"
+        >
+          Genre
+        </button>
+      </div>
+    </div>
+  </header>
+  <main
+    class="css-1wufzma"
+  >
+    <section
+      class="css-5719bz"
+    >
+      <span
+        class="css-7j8j8h"
+      >
+        0 movie found
+      </span>
+      <div
+        class="css-17wzkxm"
+      >
+        <label
+          class="css-1acepui"
+        >
+          Sort by
+        </label>
+        <button
+          class="active css-1f5llbs"
+        >
+          Release
+        </button>
+        <button
+          class=" css-1f5llbs"
+        >
+          Rating
+        </button>
+      </div>
+    </section>
+    <ul
+      class="css-17vq9x5"
+    />
+    <h1
+      class="css-1dglaoy"
+    >
+      No films found
+    </h1>
+  </main>
+</DocumentFragment>
 `;

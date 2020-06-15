@@ -27,14 +27,17 @@ class Film extends Component<FilmProps, FilmState> {
   componentDidMount(): void {
     const pathId = Number(this.props.match.params.id);
 
-    MovieService.retrieveMovies().then(({ data: movies }) => {
-      const movie: Movie = movies.find((movie: Movie) => movie.id === pathId);
-      this.setState({
-        movie,
-        similar: movies,
-        genre: movie.genres[0],
+    Promise.all([
+      MovieService.getMovie(pathId),
+      MovieService.getSimilarMovies(pathId)
+    ])
+      .then(([movie, similar]) => {
+        this.setState({
+          movie,
+          similar,
+          genre: movie && movie.genres[0],
+        });
       });
-    });
   }
 
   render(): ReactNode {

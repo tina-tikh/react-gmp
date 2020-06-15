@@ -9,9 +9,9 @@ import {
   Main,
   MainMessage,
   Movie,
+  MovieService,
   ToggleGroup,
 } from '../common';
-import movies from '../common/api/movies-mock.json';
 import SearchBox from './SearchBox';
 import SearchCaption from './SearchCaption';
 import SearchHeader from './SearchHeader';
@@ -20,7 +20,7 @@ type SearchProps = unknown;
 type SearchState = {
   searchByValue: string;
   sortByValue: string;
-  searchResult: { data: Movie[]; total: number };
+  searchResult: Movie[];
 };
 
 class Search extends Component<SearchProps, SearchState> {
@@ -32,8 +32,16 @@ class Search extends Component<SearchProps, SearchState> {
     this.state = {
       searchByValue: this.searchByOpts[0],
       sortByValue: this.sortByOpts[0],
-      searchResult: movies,
+      searchResult: [],
     };
+  }
+
+  componentDidMount(): void {
+    MovieService.retrieveMovies().then((movies) => {
+      this.setState({
+        searchResult: movies,
+      });
+    });
   }
 
   render(): ReactNode {
@@ -56,7 +64,7 @@ class Search extends Component<SearchProps, SearchState> {
         </Header>
         <Main>
           <ActionBar>
-            <ActionBarCaption>{res?.total} movie found</ActionBarCaption>
+            <ActionBarCaption>{res?.length} movie found</ActionBarCaption>
             <ToggleGroup
               label="Sort by"
               value={this.state.sortByValue}
@@ -64,8 +72,8 @@ class Search extends Component<SearchProps, SearchState> {
               onChange={(e: string) => this.handleSortByChange(e)}
             ></ToggleGroup>
           </ActionBar>
-          <FilmList films={res?.data} />
-          {res?.total === 0 && <MainMessage>No films found</MainMessage>}
+          <FilmList films={res} />
+          {res?.length === 0 && <MainMessage>No films found</MainMessage>}
         </Main>
       </React.Fragment>
     );
@@ -78,17 +86,19 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   handleSortByChange(sortByValue: string): void {
+    MovieService.retrieveMovies().then((movies) => {
+      this.setState({
+        searchResult: movies,
+      });
+    });
     this.setState({
       sortByValue,
     });
   }
 
   handleSubmit(query: string): void {
-    this.setState({
-      searchResult: {
-        data: [],
-        total: 0,
-      },
+    MovieService.searchBy(query).then((searchResult) => {
+      this.setState({ searchResult: [] });
     });
   }
 }
