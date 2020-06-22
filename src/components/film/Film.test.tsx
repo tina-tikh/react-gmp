@@ -1,48 +1,66 @@
 import * as React from 'react';
 import { match } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
-import { mocked } from 'ts-jest/utils';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
+import fetch from 'jest-fetch-mock';
 
 import { renderWithTheme } from '../../../test';
-import { MovieService } from '../../api';
+import { Movie, Movies } from '../../store/types';
 import Film from './Film';
+import thunk from 'redux-thunk';
+import { initialSearchState } from '../../store/reducers';
 
 jest.mock('react-router-dom');
-jest.mock('../common/api/movie-service');
 
 describe('<Film />', () => {
-  // const matchParams: match<{ id: string }> = {
-  //   params: {
-  //     id: '123',
-  //   },
-  //   isExact: false,
-  //   path: '',
-  //   url: '',
-  // };
-  //
-  // const moviesResponseMock: Movie[] = [];
-  // const movieMock: Movie = {
-  //   id: 123,
-  //   title: '',
-  //   tagline: '',
-  //   vote_average: 0,
-  //   vote_count: 9,
-  //   release_date: '2020-05-01',
-  //   poster_path: 'link',
-  //   overview: '',
-  //   budget: 0,
-  //   revenue: 0,
-  //   genres: ['Action', 'Adventure', 'Science Fiction'],
-  //   runtime: null,
-  // };
-
-  // beforeEach(() => {
-  //   mocked(MovieService).retrieveMovies.mockResolvedValue(moviesResponseMock);
-  //   mocked(MovieService).getMovie.mockResolvedValue(movieMock);
+  // it('', () => {
+  //   expect(true).toBe(true);
   // });
+  let store: Store;
+  const mockStore = configureStore([thunk]);
+  const matchParams: match<{ id: string }> = {
+    params: {
+      id: '123',
+    },
+    isExact: false,
+    path: '',
+    url: '',
+  };
 
-  // it('should render a film', () => {
-  //   const {asFragment} = renderWithTheme(<Film match={matchParams}/>);
-  //   expect(asFragment()).toMatchSnapshot();
-  // });
+  const moviesResponseMock: Movies = { data: [], total: 0 };
+  const movieMock: Movie = {
+    id: 123,
+    title: '',
+    tagline: '',
+    vote_average: 0,
+    vote_count: 9,
+    release_date: '2020-05-01',
+    poster_path: 'link',
+    overview: '',
+    budget: 0,
+    revenue: 0,
+    genres: ['Action', 'Adventure', 'Science Fiction'],
+    runtime: null,
+  };
+
+  beforeEach(() => {
+    store = mockStore({
+      movies: moviesResponseMock,
+      searchParams: initialSearchState
+    });
+
+    fetch.resetMocks();
+    fetch.doMock();
+  });
+
+  it('should render a film', async () => {
+    fetch.mockResponse((req) => Promise.resolve(JSON.stringify(
+      req.url.endsWith(matchParams.params.id) ? movieMock : moviesResponseMock
+    )));
+
+    const { asFragment } = renderWithTheme(<Provider store={store}><Film match={matchParams}/></Provider>);
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

@@ -6,7 +6,6 @@ export const getMovies = (opts: SearchParams): Promise<Movies> => {
   const url = new URL(baseUrl);
 
   Object.keys(opts).forEach(key => url.searchParams.append(key, (opts as any)[key]));
-  console.log(url.searchParams);
 
   return fetch(url.toString())
     .then(response => response.json());

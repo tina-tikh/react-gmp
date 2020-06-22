@@ -41,9 +41,9 @@ exports[`<Search /> should handle search filter 1`] = `
           Title
         </button>
         <button
-          class="active css-1f5llbs"
+          class=" css-1f5llbs"
         >
-          Genre
+          Genres
         </button>
       </div>
     </div>
@@ -68,7 +68,7 @@ exports[`<Search /> should handle search filter 1`] = `
           Sort by
         </label>
         <button
-          class="active css-1f5llbs"
+          class=" css-1f5llbs"
         >
           Release
         </button>
@@ -81,7 +81,11 @@ exports[`<Search /> should handle search filter 1`] = `
     </section>
     <ul
       class="css-17vq9x5"
-    />
+    >
+      <li
+        class="css-7kp13n"
+      />
+    </ul>
     <h1
       class="css-1dglaoy"
     >
@@ -127,14 +131,14 @@ exports[`<Search /> should handle sort filter 1`] = `
           Search by
         </label>
         <button
-          class="active css-1f5llbs"
+          class=" css-1f5llbs"
         >
           Title
         </button>
         <button
           class=" css-1f5llbs"
         >
-          Genre
+          Genres
         </button>
       </div>
     </div>
@@ -164,7 +168,7 @@ exports[`<Search /> should handle sort filter 1`] = `
           Release
         </button>
         <button
-          class="active css-1f5llbs"
+          class=" css-1f5llbs"
         >
           Rating
         </button>
@@ -172,7 +176,11 @@ exports[`<Search /> should handle sort filter 1`] = `
     </section>
     <ul
       class="css-17vq9x5"
-    />
+    >
+      <li
+        class="css-7kp13n"
+      />
+    </ul>
     <h1
       class="css-1dglaoy"
     >
@@ -218,14 +226,14 @@ exports[`<Search /> should render search 1`] = `
           Search by
         </label>
         <button
-          class="active css-1f5llbs"
+          class=" css-1f5llbs"
         >
           Title
         </button>
         <button
           class=" css-1f5llbs"
         >
-          Genre
+          Genres
         </button>
       </div>
     </div>
@@ -250,7 +258,7 @@ exports[`<Search /> should render search 1`] = `
           Sort by
         </label>
         <button
-          class="active css-1f5llbs"
+          class=" css-1f5llbs"
         >
           Release
         </button>
@@ -263,7 +271,11 @@ exports[`<Search /> should render search 1`] = `
     </section>
     <ul
       class="css-17vq9x5"
-    />
+    >
+      <li
+        class="css-7kp13n"
+      />
+    </ul>
     <h1
       class="css-1dglaoy"
     >

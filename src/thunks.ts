@@ -5,6 +5,7 @@ import { receiveMovies, setSearchBy, setSearchQuery, setSortBy } from './store/a
 import { ActionTypes, Movies, SearchBy, SortBy } from './store/types';
 import { MovieService } from './api';
 
+// todo: consider redux-actions, create action
 export const thunkReceiveMovies = (): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
   const opts = getState().searchParams;
   const movies: Movies = await MovieService.getMovies(opts);

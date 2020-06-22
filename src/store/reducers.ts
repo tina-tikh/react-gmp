@@ -9,7 +9,7 @@ import {
   SortBy
 } from './types';
 
-const initialState: Movies = {
+const initialMoviesState: Movies = {
   data: [],
   total: 0
 };
@@ -20,7 +20,7 @@ const initialSearchState: SearchParams = {
   sortBy: SortBy.Release
 };
 
-const moviesReducer = (state  = initialState, action: ActionTypes) => {
+const moviesReducer = (state  = initialMoviesState, action: ActionTypes) => {
   switch (action.type) {
     case MOVIES_RECEIVE:
       return {
@@ -54,4 +54,4 @@ const searchParamsReducer = (state  = initialSearchState, action: ActionTypes) =
   }
 };
 
-export { moviesReducer, searchParamsReducer };
+export { moviesReducer, searchParamsReducer, initialMoviesState, initialSearchState };
