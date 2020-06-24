@@ -34,11 +34,19 @@ export interface SearchParams {
   sortBy: SortBy;
 }
 
+export interface SelectedMovie {
+  movieId: number,
+  similar: Movies
+}
+
 export const MOVIES_RECEIVE = 'MOVIES_RECEIVE';
 export const MOVIES_GET = 'MOVIES_GET';
 export const SEARCH_QUERY_SET = 'SEARCH_QUERY_SET';
 export const SEARCH_BY_SET = 'SEARCH_BY_SET';
 export const SORT_BY_SET = 'SORT_BY_SET';
+export const MOVIE_SELECT = 'MOVIE_SELECT';
+export const MOVIE_UPDATE = 'MOVIE_UPDATE';
+export const MOVIES_RECEIVE_SIMILAR = 'MOVIES_RECEIVE_SIMILAR';
 
 interface ReceiveMoviesAction {
   type: typeof MOVIES_RECEIVE;
@@ -65,4 +73,27 @@ interface SetSortByAction {
   payload: SortBy;
 }
 
-export type ActionTypes = ReceiveMoviesAction | GetMoviesAction | SetSearchQueryAction | SetSearchByAction | SetSortByAction;
+interface SelectMovie {
+  type: typeof MOVIE_SELECT;
+  payload: number;
+}
+
+interface UpdateMovie {
+  type: typeof MOVIE_UPDATE;
+  payload: Movie;
+}
+
+interface ReceiveSimilarMovies {
+  type: typeof MOVIES_RECEIVE_SIMILAR;
+  payload: Movies;
+}
+
+export type ActionTypes =
+  ReceiveMoviesAction
+  | GetMoviesAction
+  | SetSearchQueryAction
+  | SetSearchByAction
+  | SetSortByAction
+  | SelectMovie
+  | UpdateMovie
+  | ReceiveSimilarMovies;

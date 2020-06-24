@@ -10,14 +10,11 @@ import { renderWithTheme } from '../../../test';
 import { Movie, Movies } from '../../store/types';
 import Film from './Film';
 import thunk from 'redux-thunk';
-import { initialSearchState } from '../../store/reducers';
+import { initialSearchState, initialSelectedMovieState } from '../../store/reducers';
 
 jest.mock('react-router-dom');
 
 describe('<Film />', () => {
-  // it('', () => {
-  //   expect(true).toBe(true);
-  // });
   let store: Store;
   const mockStore = configureStore([thunk]);
   const matchParams: match<{ id: string }> = {
@@ -48,7 +45,8 @@ describe('<Film />', () => {
   beforeEach(() => {
     store = mockStore({
       movies: moviesResponseMock,
-      searchParams: initialSearchState
+      searchParams: initialSearchState,
+      selectedMovie: initialSelectedMovieState
     });
 
     fetch.resetMocks();

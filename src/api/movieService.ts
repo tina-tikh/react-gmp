@@ -11,7 +11,7 @@ export const getMovies = (opts: SearchParams): Promise<Movies> => {
     .then(response => response.json());
 };
 
-export const getMovie = (id: string): Promise<Movie> => {
+export const getMovie = (id: number): Promise<Movie> => {
   return fetch(`${baseUrl}/${id}`)
     .then(response => response.json());
 };

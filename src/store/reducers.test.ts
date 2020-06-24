@@ -1,11 +1,29 @@
-import { initialMoviesState, initialSearchState, moviesReducer, searchParamsReducer } from './reducers';
-import { receiveMovies, setSearchBy, setSearchQuery, setSortBy } from './actions';
-import { ActionTypes, Movies, SearchBy, SortBy } from './types';
+import {
+  initialMoviesState,
+  initialSearchState,
+  initialSelectedMovieState,
+  moviesReducer,
+  searchParamsReducer,
+  selectedMovieReducer
+} from './reducers';
+import {
+  receiveMovies,
+  receiveSimilarMovies,
+  selectMovie,
+  setSearchBy,
+  setSearchQuery,
+  setSortBy,
+  updateMovie
+} from './actions';
+import { ActionTypes, Movie, Movies, SearchBy, SortBy } from './types';
 
 describe('Reducers', () => {
   const dumpAction: any = { type: '' };
 
   describe('Movies reducer', () => {
+    const movie = {
+      id: 123
+    } as Movie;
     it('should return the initial state', () => {
       expect(moviesReducer(undefined, dumpAction)).toBe(initialMoviesState);
     });
@@ -18,6 +36,22 @@ describe('Reducers', () => {
       const action: ActionTypes = receiveMovies(movies);
 
       expect(moviesReducer(initialMoviesState, action)).toEqual(movies);
+    });
+
+    it('should handle MOVIE_UPDATE', () => {
+      const newMovie = {
+        ...movie,
+        title: "New title"
+      } as Movie;
+      const movies: Movies = {
+        data: [movie],
+        total: 1
+      };
+
+      const action: ActionTypes = updateMovie(newMovie);
+      const newState = moviesReducer(movies, action);
+
+      expect(newState.data[0]).toEqual(newMovie);
     });
   });
 
@@ -48,6 +82,31 @@ describe('Reducers', () => {
       const res = searchParamsReducer(initialSearchState, action);
 
       expect(res.sortBy).toEqual(sortBy);
+    });
+  });
+
+  describe('Selected movie reducer', () => {
+    it('should return the initial state', () => {
+      expect(selectedMovieReducer(undefined, dumpAction)).toEqual(initialSelectedMovieState);
+    });
+
+    it('should handle MOVIE_SELECT', () => {
+      const id = 123;
+      const action: ActionTypes = selectMovie(id);
+      const res = selectedMovieReducer(initialSelectedMovieState, action);
+
+      expect(res.movieId).toEqual(id);
+    });
+
+    it('should handle MOVIES_RECEIVE_SIMILAR', () => {
+      const movies: Movies = {
+        data: [],
+        total: 0
+      };
+      const action: ActionTypes = receiveSimilarMovies(movies);
+      const res = selectedMovieReducer(initialSelectedMovieState, action);
+
+      expect(res.similar).toEqual(movies);
     });
   });
 });

@@ -1,8 +1,16 @@
 import { ThunkAction } from "redux-thunk";
 
 import { AppState } from './store';
-import { receiveMovies, setSearchBy, setSearchQuery, setSortBy } from './store/actions';
-import { ActionTypes, Movies, SearchBy, SortBy } from './store/types';
+import {
+  receiveMovies,
+  receiveSimilarMovies,
+  selectMovie,
+  setSearchBy,
+  setSearchQuery,
+  setSortBy,
+  updateMovie
+} from './store/actions';
+import { ActionTypes, Movie, Movies, SearchBy, SortBy } from './store/types';
 import { MovieService } from './api';
 
 // todo: consider redux-actions, create action
@@ -23,7 +31,7 @@ export const thunkReceiveSimilarByGenre = (genre: string): ThunkAction<void, App
   };
   const movies: Movies = await MovieService.getMovies(opts);
   dispatch(
-    receiveMovies(movies)
+    receiveSimilarMovies(movies)
   );
 };
 
@@ -51,5 +59,13 @@ export const thunkSetSortBy = (sortBy: SortBy): ThunkAction<void, AppState, null
   const movies: Movies = await MovieService.getMovies(opts);
   dispatch(
     receiveMovies(movies)
+  );
+};
+
+export const thunkSelectMovie = (movieId: number): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
+  dispatch(selectMovie(movieId));
+  const movie: Movie = await MovieService.getMovie(movieId);
+  dispatch(
+    updateMovie(movie)
   );
 };

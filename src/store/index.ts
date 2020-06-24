@@ -4,11 +4,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { moviesReducer, searchParamsReducer } from './reducers';
+import { moviesReducer, searchParamsReducer, selectedMovieReducer } from './reducers';
 import { Persistor } from "redux-persist/es/types";
 
 const rootReducer = combineReducers({
   movies: moviesReducer,
+  selectedMovie: selectedMovieReducer,
   searchParams: searchParamsReducer
 });
 

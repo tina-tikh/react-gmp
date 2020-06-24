@@ -1,7 +1,11 @@
 import {
   ActionTypes,
+  Movie,
+  MOVIE_SELECT,
+  MOVIE_UPDATE,
   Movies,
   MOVIES_RECEIVE,
+  MOVIES_RECEIVE_SIMILAR,
   SEARCH_BY_SET,
   SEARCH_QUERY_SET,
   SearchBy,
@@ -27,4 +31,19 @@ export const setSearchBy = (opt: SearchBy): ActionTypes => ({
 export const setSortBy = (opt: SortBy): ActionTypes => ({
   type: SORT_BY_SET,
   payload: opt
+});
+
+export const selectMovie = (opt: number): ActionTypes => ({
+  type: MOVIE_SELECT,
+  payload: opt
+});
+
+export const updateMovie = (opt: Movie): ActionTypes => ({
+  type: MOVIE_UPDATE,
+  payload: opt
+});
+
+export const receiveSimilarMovies = (movies: Movies): ActionTypes => ({
+  type: MOVIES_RECEIVE_SIMILAR,
+  payload: movies
 });
