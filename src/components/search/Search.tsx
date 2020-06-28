@@ -1,46 +1,56 @@
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 
-import { Movies, SearchBy, SearchParams, SortBy } from '../../store/types';
-import { AppState } from '../../store';
-import { thunkReceiveMovies, thunkSetSearchQuery, thunkSetSearchBy, thunkSetSortBy } from '../../thunks';
+import { AppState, getSearchMovies, getSearchTotal } from '../../store';
+import { thunkReceiveMovies } from '../../thunks';
+import { Movie, SearchBy, SortBy } from '../../api';
 import { ActionBar, ActionBarCaption, Header, Main, MainMessage } from '../layout';
 import { ToggleGroup } from '../form';
 import FilmList from '../FilmList';
 import SearchBox from './SearchBox';
 import SearchCaption from './SearchCaption';
 import SearchHeader from './SearchHeader';
+import SearchManager from './SearchManager';
 
-type SearchProps = {
-  movies: Movies,
-  searchParams: SearchParams,
-  thunkSetSearchQuery: typeof thunkSetSearchQuery,
-  thunkReceiveMovies: typeof thunkReceiveMovies,
-  thunkSetSearchBy: typeof thunkSetSearchBy,
-  thunkSetSortBy: typeof thunkSetSortBy
-};
+interface SearchProps extends RouteComponentProps<any> {
+  movies: Movie[],
+  total: number,
+  thunkReceiveMovies: typeof thunkReceiveMovies
+}
 
 class Search extends Component<SearchProps> {
-  componentDidMount(): void {
-    this.props.thunkReceiveMovies();
+  private searchManager: SearchManager<any>;
+
+  constructor(props: SearchProps) {
+    super(props);
+    this.searchManager = new SearchManager(props.location);
+  }
+
+  componentDidUpdate(prevProps: Readonly<SearchProps>) {
+    if (this.props.location !== prevProps.location) {
+      const params = this.searchManager.getSearchParamsObj();
+      this.props.thunkReceiveMovies(params);
+    }
   }
 
   render(): ReactNode {
+    const params = this.searchManager.getSearchParamsObj();
+    const total = this.props.total;
     const movies = this.props.movies;
-    const searchBy = this.props.searchParams.searchBy;
-    const sortBy = this.props.searchParams.sortBy;
+
     return (
       <React.Fragment>
         <Header>
           <SearchHeader>
             <SearchCaption>Find your movie</SearchCaption>
-            <SearchBox
-              onSubmit={(e: string) => this.handleSubmit(e)}
+            <SearchBox searchValue={params.search}
+                       onSubmit={(e: string) => this.handleSubmit(e)}
             ></SearchBox>
             <ToggleGroup
               label="Search by"
-              value={searchBy}
+              value={params.searchBy}
               values={Object.values(SearchBy)}
               valueLabels={Object.keys(SearchBy)}
               onChange={(e: string) => this.handleSearchByChange(e)}
@@ -49,41 +59,48 @@ class Search extends Component<SearchProps> {
         </Header>
         <Main>
           <ActionBar>
-            <ActionBarCaption>{movies?.total} movie found</ActionBarCaption>
+            <ActionBarCaption>{total} movie found</ActionBarCaption>
             <ToggleGroup
               label="Sort by"
-              value={sortBy}
+              value={params.sortBy}
               values={Object.values(SortBy)}
               valueLabels={Object.keys(SortBy)}
               onChange={(e: string) => this.handleSortByChange(e)}
             ></ToggleGroup>
           </ActionBar>
-          <FilmList films={movies?.data}/>
-          {movies?.total === 0 && <MainMessage>No films found</MainMessage>}
+          <FilmList films={movies}/>
+          {total === 0 && <MainMessage>No films found</MainMessage>}
         </Main>
       </React.Fragment>
     );
   }
 
   handleSearchByChange(searchByValue: string): void {
-    this.props.thunkSetSearchBy(searchByValue as SearchBy);
-  }
-
-  handleSubmit(query: string): void {
-    this.props.thunkSetSearchQuery(query);
+    this.searchManager.setSearchBy(searchByValue as SearchBy);
+    this.refresh();
   }
 
   handleSortByChange(sortByValue: string): void {
-    this.props.thunkSetSortBy(sortByValue as SortBy);
+    this.searchManager.setSortBy(sortByValue as SortBy);
+    this.refresh();
+  }
+
+  handleSubmit(q: string): void {
+    this.searchManager.setQuery(q);
+    this.refresh();
+  }
+
+  refresh(): void {
+    this.props.history.push('/search?' + this.searchManager.queryParams);
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  movies: state.movies,
-  searchParams: state.searchParams
+  movies: getSearchMovies(state),
+  total: getSearchTotal(state)
 });
 
 export default connect(
   mapStateToProps,
-  { thunkReceiveMovies, thunkSetSearchBy, thunkSetSortBy, thunkSetSearchQuery }
+  { thunkReceiveMovies }
 )(Search);

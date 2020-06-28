@@ -7,13 +7,16 @@ import configureStore from './store';
 import App from './App';
 
 import 'normalize.css';
+import { BrowserRouter } from 'react-router-dom';
 
 const { store, persistor } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App/>
+      <BrowserRouter>
+        <App/>
+      </BrowserRouter>
     </PersistGate>
   </Provider>,
   document.getElementById('app')

@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
-import { match } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 
 import { ActionBar, ActionBarCaption, Header, Main } from '../layout';
-import FilmList from '../FilmList';
-import { Movie, Movies } from '../../store/types';
 import { thunkReceiveSimilarByGenre, thunkSelectMovie } from '../../thunks';
-import { AppState } from '../../store';
+import { Movie } from '../../api';
+import { AppState, getSelectedMovie, getSimilarMovies } from '../../store';
+import FilmList from '../FilmList';
 import FilmDetails from './FilmDetails';
 
-type FilmProps = {
-  match: match<{ id: string }>;
-  movies: Movies,
+interface FilmProps extends RouteComponentProps<{ id: string }> {
+  similar: Movie[],
+  similarTotal: number,
   movie: Movie,
   thunkReceiveSimilarByGenre: typeof thunkReceiveSimilarByGenre
   thunkSelectMovie: typeof thunkSelectMovie
-};
+}
 
 type FilmState = {
   movieId: string
@@ -44,29 +44,25 @@ class Film extends Component<FilmProps, FilmState> {
     return (
       <React.Fragment>
         <Header>
-          <FilmDetails film={this.props?.movie}/>
+          <FilmDetails film={this.props.movie}/>
         </Header>
         <Main>
           <ActionBar>
             <ActionBarCaption>
-              Films by {this.props?.movie?.genres[0]} genre
+              Films by {this.props.movie?.genres[0]} genre
             </ActionBarCaption>
           </ActionBar>
-          <FilmList films={this.props?.movies?.data}/>
+          <FilmList films={this.props.similar}/>
         </Main>
       </React.Fragment>
     );
   }
 }
 
-const getMovieById = (state: AppState) => {
-  const id = state.selectedMovie.movieId;
-  return id && state.movies.data.find((movie) => movie.id === id);
-};
-
 const mapStateToProps = (state: AppState) => ({
-  movies: state.selectedMovie.similar,
-  movie: getMovieById(state)
+  movie: getSelectedMovie(state),
+  similar: getSimilarMovies(state),
+  similarTotal: state.selectedMovie.similar.total
 });
 
 export default connect(

@@ -1,80 +1,70 @@
 import {
   ActionTypes,
-  MOVIE_SELECT,
+  MOVIE_RECEIVE,
   MOVIE_UPDATE,
-  Movies,
   MOVIES_RECEIVE,
   MOVIES_RECEIVE_SIMILAR,
-  SEARCH_BY_SET,
-  SEARCH_QUERY_SET,
-  SearchBy,
-  SearchParams,
-  SelectedMovie,
-  SORT_BY_SET,
-  SortBy
+  MoviesState,
+  SelectedMovieState,
 } from './types';
 
-const initialMoviesState: Movies = {
-  data: [],
-  total: 0
+const initialMoviesState: MoviesState = {
+  cache: {},
+  search: {
+    moviesIds: [],
+    total: 0
+  }
 };
 
-const initialSearchState: SearchParams = {
-  search: '',
-  searchBy: SearchBy.Title,
-  sortBy: SortBy.Release
-};
-
-const initialSelectedMovieState: SelectedMovie = {
+const initialSelectedMovieState: SelectedMovieState = {
   movieId: null,
-  similar: initialMoviesState
+  similar: {
+    moviesIds: [],
+    total: 0
+  }
 };
 
-const moviesReducer = (state = initialMoviesState, action: ActionTypes) => {
+const moviesReducer = (state = initialMoviesState, action: ActionTypes): MoviesState => {
   switch (action.type) {
     case MOVIES_RECEIVE:
-      return action.payload;
+      return {
+        search: {
+          total: action.payload.total,
+          moviesIds: action.payload.data.map((movie) => movie.id)
+        },
+        cache: action.payload.data.reduce((acc, next) => {
+          return {
+            ...acc,
+            [next.id]: next
+          };
+        }, { ...state.cache })
+      };
+    case MOVIES_RECEIVE_SIMILAR:
+      return {
+        ...state,
+        cache: action.payload.data.reduce((acc, next) => {
+          return {
+            ...acc,
+            [next.id]: next
+          };
+        }, { ...state.cache })
+      };
     case MOVIE_UPDATE:
       return {
         ...state,
-        data: state.data.map((movie) => {
-          if (movie.id === action.payload.id) {
-            return action.payload;
-          }
-
-          return movie;
-        })
+        cache: {
+          ...state.cache,
+          [action.payload.id]: action.payload
+        }
       };
     default:
       return state;
   }
 };
 
-const searchParamsReducer = (state = initialSearchState, action: ActionTypes) => {
+const selectedMovieReducer = (state: SelectedMovieState = initialSelectedMovieState, action: ActionTypes): SelectedMovieState => {
   switch (action.type) {
-    case SEARCH_QUERY_SET:
-      return {
-        ...state,
-        search: action.payload
-      };
-    case SEARCH_BY_SET:
-      return {
-        ...state,
-        searchBy: action.payload
-      };
-    case SORT_BY_SET:
-      return {
-        ...state,
-        sortBy: action.payload
-      };
-    default:
-      return state;
-  }
-};
-
-const selectedMovieReducer = (state: SelectedMovie = initialSelectedMovieState, action: ActionTypes) => {
-  switch (action.type) {
-    case MOVIE_SELECT:
+    case MOVIE_RECEIVE:
       return {
         ...state,
         movieId: action.payload
@@ -82,7 +72,10 @@ const selectedMovieReducer = (state: SelectedMovie = initialSelectedMovieState, 
     case MOVIES_RECEIVE_SIMILAR:
       return {
         ...state,
-        similar: action.payload
+        similar: {
+          moviesIds: action.payload.data.map((movie) => movie.id),
+          total: action.payload.total
+        }
       };
     default:
       return state;
@@ -91,9 +84,7 @@ const selectedMovieReducer = (state: SelectedMovie = initialSelectedMovieState, 
 
 export {
   moviesReducer,
-  searchParamsReducer,
   selectedMovieReducer,
   initialMoviesState,
-  initialSearchState,
   initialSelectedMovieState
 };

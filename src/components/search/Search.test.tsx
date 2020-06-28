@@ -5,13 +5,12 @@ import { fireEvent, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import fetch from 'jest-fetch-mock';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { MemoryRouter } from 'react-router';
 
 import { renderWithTheme } from '../../../test';
-import { Movies, SearchBy, SortBy } from '../../store/types';
+import { Movies, SearchBy, SortBy } from '../../api';
 import Search from './Search';
-import thunk from 'redux-thunk';
-
-jest.mock('react-router-dom');
 
 describe('<Search />', () => {
   let store: Store;
@@ -25,7 +24,7 @@ describe('<Search />', () => {
         tagline: '',
         vote_average: 0,
         vote_count: 9,
-        release_date: '',
+        release_date: '1995-12-17T03:24:00',
         poster_path: 'link',
         overview: '',
         budget: 0,
@@ -34,24 +33,29 @@ describe('<Search />', () => {
         runtime: null,
       },
     ],
-    total: 0
+    total: 1
   };
   const searchParamsMock: any = {};
   const searchLabels: string[] = Object.keys(SearchBy);
   const sortLabels: string[] = Object.keys(SortBy);
+  const propsMock = {
+    history: {
+      push: jest.fn()
+    } as any,
+    location: {} as any,
+    match: {} as any,
+  }
 
   beforeEach(async () => {
     store = mockStore({
-      movies: moviesResponseMock,
-      searchParams: searchParamsMock
+      movies: moviesResponseMock
     });
 
     store.dispatch = jest.fn();
 
-    renderResult = renderWithTheme(<Provider store={store}><Search/></Provider>);
-
-    fetch.resetMocks();
-    fetch.doMock();
+    renderResult = renderWithTheme(<MemoryRouter>
+      <Provider store={store}><Search {...propsMock}/></Provider>
+    </MemoryRouter>);
   });
 
   it('should render search', () => {
@@ -60,14 +64,13 @@ describe('<Search />', () => {
   });
 
   it('should handle search query', () => {
-    fetch.mockResponseOnce(JSON.stringify(moviesResponseMock));
     const query = '123';
     const { getByText, getByPlaceholderText } = renderResult;
 
     fireEvent.change(getByPlaceholderText('Search'), { target: { value: query } });
     fireEvent.click(getByText('Search'));
 
-    expect(getByText('No films found')).toBeInTheDocument();
+    expect(propsMock.history.push).toHaveBeenCalled();
   });
 
   it('should handle search filter', () => {
