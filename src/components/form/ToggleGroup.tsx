@@ -6,8 +6,9 @@ import Button from './Button';
 
 type ToggleGroupProps = {
   label?: string;
-  opts: string[];
   value: string;
+  values: string[];
+  valueLabels: string[];
   onChange?: (i: string) => void;
 };
 
@@ -46,13 +47,13 @@ class ToggleGroup extends PureComponent<ToggleGroupProps> {
     return (
       <Container>
         <Label>{this.props.label}</Label>
-        {this.props.opts?.map((item) => (
+        {this.props.values?.map((val, i) => (
           <Toggle
-            key={item}
-            className={`${this.getClassName(item)}`}
-            onClick={() => this.handleOnClick(item)}
+            key={val}
+            className={`${this.getClassName(val)}`}
+            onClick={() => this.handleOnClick(val)}
           >
-            {item}
+            {this.props.valueLabels[i]}
           </Toggle>
         ))}
       </Container>
