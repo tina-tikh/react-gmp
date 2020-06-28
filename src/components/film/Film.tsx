@@ -24,25 +24,20 @@ type FilmState = {
 
 class Film extends Component<FilmProps, FilmState> {
   componentDidMount(): void {
-    this.refresh();
+    this.props.thunkSelectMovie(Number(this.props.match.params.id));
   }
 
   componentDidUpdate(prevProps: Readonly<FilmProps>): void {
-    const pathId = prevProps.match.params.id;
-    const prevPathId = this.props.match.params.id;
-    if (pathId !== prevPathId) {
-      this.refresh()
+    const getMovieId = (props: Readonly<FilmProps>) => props.match.params.id;
+    const getGenre = (props: Readonly<FilmProps>) => props.movie?.genres[0];
+
+    if (getMovieId(this.props) !== getMovieId(prevProps)) {
+      this.props.thunkSelectMovie(Number(getMovieId(this.props)));
     }
-  }
 
-  refresh() {
-    const pathId = this.props.match.params.id;
-    this.props.thunkSelectMovie(Number(pathId));
-
-    const movie = this.props.movie;
-    const genre: string = movie && movie.genres[0];
-
-    this.props.thunkReceiveSimilarByGenre(genre);
+    if (getGenre(this.props) !== getGenre(prevProps)) {
+      this.props.thunkReceiveSimilarByGenre(getGenre(this.props))
+    }
   }
 
   render(): ReactNode {

@@ -30,8 +30,8 @@ export enum SortBy {
 
 export interface SearchParams {
   search: string;
-  searchBy: SearchBy;
-  sortBy: SortBy;
+  searchBy?: SearchBy;
+  sortBy?: SortBy;
 }
 
 export interface SelectedMovie {
