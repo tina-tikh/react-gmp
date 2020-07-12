@@ -1,11 +1,12 @@
-import { Movie, Movies, SearchParams } from '../store/types';
+import { Movie, Movies, SearchParams } from './models';
 
 const baseUrl = 'http://reactjs-cdp.herokuapp.com/movies';
 
 export const getMovies = (opts: SearchParams): Promise<Movies> => {
   const url = new URL(baseUrl);
 
-  Object.keys(opts).forEach(key => url.searchParams.append(key, (opts as any)[key]));
+  const optsObj = opts as any;
+  Object.keys(opts).forEach(key => optsObj[key] && url.searchParams.append(key, optsObj[key]));
 
   return fetch(url.toString())
     .then(response => response.json());

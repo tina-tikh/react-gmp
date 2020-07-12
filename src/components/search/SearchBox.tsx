@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { PureComponent, ReactNode } from 'react';
+import { PureComponent, ReactNode, RefObject } from 'react';
 
 import { styled } from '../../theme';
 import { Button } from '../form';
 
 type SearchBoxProps = {
-  onSubmit?: (query: string) => void;
-};
-
-type SearchBoxState = {
   searchValue: string;
+  onSubmit?: (query: string) => void;
 };
 
 const Container = styled.div`
@@ -40,21 +37,16 @@ const SearchButton = styled(Button)`
   font-weight: bold;
 `;
 
-class SearchBox extends PureComponent<SearchBoxProps, SearchBoxState> {
-  constructor(props: SearchBoxProps) {
-    super(props);
-    this.state = {
-      searchValue: '',
-    };
-  }
+class SearchBox extends PureComponent<SearchBoxProps> {
+  private inputRef: RefObject<HTMLInputElement> = React.createRef();
 
   render(): ReactNode {
     return (
       <Container>
-        <Input
-          placeholder="Search"
-          value={this.state.searchValue}
-          onChange={(e) => this.handleSearchValueChange(e)}
+        <Input ref={this.inputRef}
+               placeholder="Search"
+               defaultValue={this.props.searchValue}
+               onKeyDown={(e) => this.handleKeyDown(e)}
         ></Input>
         <SearchButton onClick={() => this.handleOnSubmit()}>
           Search
@@ -63,14 +55,16 @@ class SearchBox extends PureComponent<SearchBoxProps, SearchBoxState> {
     );
   }
 
-  handleSearchValueChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({
-      searchValue: e.target.value,
-    });
+  handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.handleOnSubmit();
+    }
   }
 
   handleOnSubmit(): void {
-    this.props.onSubmit(this.state.searchValue);
+    this.props.onSubmit(this.inputRef.current.value);
   }
 }
 

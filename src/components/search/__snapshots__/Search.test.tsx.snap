@@ -5,6 +5,15 @@ exports[`<Search /> should handle search filter 1`] = `
   <header
     class="css-t3r2z7"
   >
+    <a
+      class="css-146to4j"
+      href="/"
+    >
+      <em>
+        netflix
+      </em>
+      roulette
+    </a>
     <div
       class="css-1r4e12l"
     >
@@ -36,7 +45,7 @@ exports[`<Search /> should handle search filter 1`] = `
           Search by
         </label>
         <button
-          class=" css-1f5llbs"
+          class="active css-1f5llbs"
         >
           Title
         </button>
@@ -57,7 +66,7 @@ exports[`<Search /> should handle search filter 1`] = `
       <span
         class="css-7j8j8h"
       >
-        0 movie found
+         movie found
       </span>
       <div
         class="css-17wzkxm"
@@ -68,7 +77,7 @@ exports[`<Search /> should handle search filter 1`] = `
           Sort by
         </label>
         <button
-          class=" css-1f5llbs"
+          class="active css-1f5llbs"
         >
           Release
         </button>
@@ -81,16 +90,7 @@ exports[`<Search /> should handle search filter 1`] = `
     </section>
     <ul
       class="css-17vq9x5"
-    >
-      <li
-        class="css-7kp13n"
-      />
-    </ul>
-    <h1
-      class="css-1dglaoy"
-    >
-      No films found
-    </h1>
+    />
   </main>
 </DocumentFragment>
 `;
@@ -100,6 +100,15 @@ exports[`<Search /> should handle sort filter 1`] = `
   <header
     class="css-t3r2z7"
   >
+    <a
+      class="css-146to4j"
+      href="/"
+    >
+      <em>
+        netflix
+      </em>
+      roulette
+    </a>
     <div
       class="css-1r4e12l"
     >
@@ -131,7 +140,7 @@ exports[`<Search /> should handle sort filter 1`] = `
           Search by
         </label>
         <button
-          class=" css-1f5llbs"
+          class="active css-1f5llbs"
         >
           Title
         </button>
@@ -152,7 +161,7 @@ exports[`<Search /> should handle sort filter 1`] = `
       <span
         class="css-7j8j8h"
       >
-        0 movie found
+         movie found
       </span>
       <div
         class="css-17wzkxm"
@@ -163,7 +172,7 @@ exports[`<Search /> should handle sort filter 1`] = `
           Sort by
         </label>
         <button
-          class=" css-1f5llbs"
+          class="active css-1f5llbs"
         >
           Release
         </button>
@@ -176,16 +185,7 @@ exports[`<Search /> should handle sort filter 1`] = `
     </section>
     <ul
       class="css-17vq9x5"
-    >
-      <li
-        class="css-7kp13n"
-      />
-    </ul>
-    <h1
-      class="css-1dglaoy"
-    >
-      No films found
-    </h1>
+    />
   </main>
 </DocumentFragment>
 `;
@@ -195,6 +195,15 @@ exports[`<Search /> should render search 1`] = `
   <header
     class="css-t3r2z7"
   >
+    <a
+      class="css-146to4j"
+      href="/"
+    >
+      <em>
+        netflix
+      </em>
+      roulette
+    </a>
     <div
       class="css-1r4e12l"
     >
@@ -226,7 +235,7 @@ exports[`<Search /> should render search 1`] = `
           Search by
         </label>
         <button
-          class=" css-1f5llbs"
+          class="active css-1f5llbs"
         >
           Title
         </button>
@@ -247,7 +256,7 @@ exports[`<Search /> should render search 1`] = `
       <span
         class="css-7j8j8h"
       >
-        0 movie found
+         movie found
       </span>
       <div
         class="css-17wzkxm"
@@ -258,7 +267,7 @@ exports[`<Search /> should render search 1`] = `
           Sort by
         </label>
         <button
-          class=" css-1f5llbs"
+          class="active css-1f5llbs"
         >
           Release
         </button>
@@ -271,16 +280,7 @@ exports[`<Search /> should render search 1`] = `
     </section>
     <ul
       class="css-17vq9x5"
-    >
-      <li
-        class="css-7kp13n"
-      />
-    </ul>
-    <h1
-      class="css-1dglaoy"
-    >
-      No films found
-    </h1>
+    />
   </main>
 </DocumentFragment>
 `;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component, ReactNode } from 'react';
 
 import { styled } from '../../theme';
-import { Movie } from '../../store/types';
+import { Movie } from '../../api';
 
 type FilmDetailsProps = {
   film: Movie;

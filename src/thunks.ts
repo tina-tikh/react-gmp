@@ -1,21 +1,16 @@
 import { ThunkAction } from "redux-thunk";
 
-import { AppState } from './store';
+import { AppState, getSelectedMovie } from './store';
 import {
   receiveMovies,
   receiveSimilarMovies,
-  selectMovie,
-  setSearchBy,
-  setSearchQuery,
-  setSortBy,
+  receiveMovie,
   updateMovie
 } from './store/actions';
-import { ActionTypes, Movie, Movies, SearchBy, SortBy } from './store/types';
-import { MovieService } from './api';
+import { ActionTypes } from './store/types';
+import { Movie, Movies, MovieService, SearchBy, SearchParams } from './api';
 
-// todo: consider redux-actions, create action
-export const thunkReceiveMovies = (): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
-  const opts = getState().searchParams;
+export const thunkReceiveMovies = (opts?: SearchParams): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
   const movies: Movies = await MovieService.getMovies(opts);
   dispatch(
     receiveMovies(movies)
@@ -23,11 +18,9 @@ export const thunkReceiveMovies = (): ThunkAction<void, AppState, null, ActionTy
 };
 
 export const thunkReceiveSimilarByGenre = (genre: string): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
-  const searchParams = getState().searchParams;
   const opts = {
     search: genre,
-    searchBy: SearchBy.Genres,
-    sortBy: searchParams.sortBy
+    searchBy: SearchBy.Genres
   };
   const movies: Movies = await MovieService.getMovies(opts);
   dispatch(
@@ -35,37 +28,15 @@ export const thunkReceiveSimilarByGenre = (genre: string): ThunkAction<void, App
   );
 };
 
-export const thunkSetSearchQuery = (search: string): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
-  dispatch(setSearchQuery(search));
-  const opts = getState().searchParams;
-  const movies: Movies = await MovieService.getMovies(opts);
-  dispatch(
-    receiveMovies(movies)
-  );
-};
-
-export const thunkSetSearchBy = (searchBy: SearchBy): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
-  dispatch(setSearchBy(searchBy));
-  const opts = getState().searchParams;
-  const movies: Movies = await MovieService.getMovies(opts);
-  dispatch(
-    receiveMovies(movies)
-  );
-};
-
-export const thunkSetSortBy = (sortBy: SortBy): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
-  dispatch(setSortBy(sortBy));
-  const opts = getState().searchParams;
-  const movies: Movies = await MovieService.getMovies(opts);
-  dispatch(
-    receiveMovies(movies)
-  );
-};
-
 export const thunkSelectMovie = (movieId: number): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
-  dispatch(selectMovie(movieId));
-  const movie: Movie = await MovieService.getMovie(movieId);
-  dispatch(
-    updateMovie(movie)
-  );
+  dispatch(receiveMovie(movieId));
+
+  const cachedMovie = getSelectedMovie(getState());
+
+  if (!cachedMovie) {
+    const movie: Movie = await MovieService.getMovie(movieId);
+    dispatch(
+      updateMovie(movie)
+    );
+  }
 };

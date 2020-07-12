@@ -3,7 +3,7 @@ import { Component, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { styled } from '../theme';
-import { Movie } from '../store/types';
+import { Movie } from '../api';
 
 type FilmListProps = {
   films: Movie[];

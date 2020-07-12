@@ -5,6 +5,15 @@ exports[`<Film /> should render a film 1`] = `
   <header
     class="css-t3r2z7"
   >
+    <a
+      class="css-146to4j"
+      href="/"
+    >
+      <em>
+        netflix
+      </em>
+      roulette
+    </a>
     <div>
       <img
         class="css-7d2ql6"

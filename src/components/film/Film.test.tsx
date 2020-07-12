@@ -1,30 +1,29 @@
 import * as React from 'react';
-import { match } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
+import thunk from 'redux-thunk';
 import fetch from 'jest-fetch-mock';
 
 import { renderWithTheme } from '../../../test';
-import { Movie, Movies } from '../../store/types';
+import { initialSelectedMovieState } from '../../store/reducers';
+import { Movie, Movies } from '../../api';
 import Film from './Film';
-import thunk from 'redux-thunk';
-import { initialSearchState, initialSelectedMovieState } from '../../store/reducers';
-
-jest.mock('react-router-dom');
+import { MemoryRouter } from 'react-router';
 
 describe('<Film />', () => {
   let store: Store;
   const mockStore = configureStore([thunk]);
-  const matchParams: match<{ id: string }> = {
-    params: {
-      id: '123',
-    },
-    isExact: false,
-    path: '',
-    url: '',
-  };
+  const propsMock = {
+    history: {} as any,
+    location: {} as any,
+    match: {
+      params: {
+        id: '123',
+      }
+    } as any,
+  }
 
   const moviesResponseMock: Movies = { data: [], total: 0 };
   const movieMock: Movie = {
@@ -33,7 +32,7 @@ describe('<Film />', () => {
     tagline: '',
     vote_average: 0,
     vote_count: 9,
-    release_date: '2020-05-01',
+    release_date: '1995-12-17T03:24:00',
     poster_path: 'link',
     overview: '',
     budget: 0,
@@ -45,7 +44,6 @@ describe('<Film />', () => {
   beforeEach(() => {
     store = mockStore({
       movies: moviesResponseMock,
-      searchParams: initialSearchState,
       selectedMovie: initialSelectedMovieState
     });
 
@@ -55,10 +53,12 @@ describe('<Film />', () => {
 
   it('should render a film', async () => {
     fetch.mockResponse((req) => Promise.resolve(JSON.stringify(
-      req.url.endsWith(matchParams.params.id) ? movieMock : moviesResponseMock
+      req.url.endsWith(propsMock.match.params.id) ? movieMock : moviesResponseMock
     )));
 
-    const { asFragment } = renderWithTheme(<Provider store={store}><Film match={matchParams}/></Provider>);
+    const { asFragment } = renderWithTheme(<MemoryRouter>
+      <Provider store={store}><Film {...propsMock}/></Provider>
+    </MemoryRouter>);
     expect(asFragment()).toMatchSnapshot();
   });
 });
