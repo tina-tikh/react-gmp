@@ -7,11 +7,7 @@
     "moduleResolution": "node",
     "target": "es6",
     "jsx": "preserve",
-    "lib": [
-      "es5",
-      "es6",
-      "dom"
-    ],
+    "lib": ["es5", "es6", "dom"],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
@@ -22,15 +18,9 @@
     "esModuleInterop": true,
     "isolatedModules": true
   },
-  "include": [
-    "./lib/**/*"
-  ],
+  "include": ["./lib/**/*"],
   "awesomeTypescriptLoaderOptions": {
-    "reportFiles": [
-      "./src/**/*"
-    ]
+    "reportFiles": ["./src/**/*"]
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
