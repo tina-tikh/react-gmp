@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import { ErrorBoundary, Film, Footer, NotFound, Page, Search } from './components';
 

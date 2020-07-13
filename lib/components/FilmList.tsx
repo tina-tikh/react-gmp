@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { styled } from '../theme';
 import { Movie } from '../api';
@@ -12,7 +12,7 @@ type FilmCardProps = {
   film: Movie;
 };
 
-const FilmLink = styled(Link)`
+const FilmLink = styled.a`
   display: inline-block;
   width: 26rem;
   height: 50rem;
@@ -51,14 +51,16 @@ const Year = styled.span`
 class FilmCard extends Component<FilmCardProps> {
   render(): ReactNode {
     return (
-      <FilmLink to={`/film/${this.props.film.id}`}>
-        <Poster src={this.props.film.poster_path} width="267" height="400" />
-        <Info>
-          <Year>{this.getYear(this.props.film.release_date)}</Year>
-          <Title>{this.props.film.title}</Title>
-          <span>{this.props.film.genres[0]}</span>
-        </Info>
-      </FilmLink>
+      <Link href={`/film/${this.props.film.id}`}>
+        <FilmLink>
+          <Poster src={this.props.film.poster_path} width="267" height="400"/>
+          <Info>
+            <Year>{this.getYear(this.props.film.release_date)}</Year>
+            <Title>{this.props.film.title}</Title>
+            <span>{this.props.film.genres[0]}</span>
+          </Info>
+        </FilmLink>
+      </Link>
     );
   }
 
@@ -83,7 +85,7 @@ class FilmList extends Component<FilmListProps> {
       <List>
         {this.props.films?.map((film) => (
           <ListItem key={film.id}>
-            <FilmCard film={film} />
+            <FilmCard film={film}/>
           </ListItem>
         ))}
       </List>

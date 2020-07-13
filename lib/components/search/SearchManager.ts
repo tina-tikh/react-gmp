@@ -1,22 +1,14 @@
-import * as H from 'history';
-
 import { SearchBy, SearchParams, SortBy } from '../../api';
 
 class SearchManager<T> {
-  private location: H.Location<T>;
   private _queryParams: URLSearchParams;
 
-  public set queryParams(q: string) {
-    this._queryParams = new URLSearchParams(q);
-  }
-
-  public get queryParams(): string {
-    return this._queryParams.toString();
-  }
-
-  constructor(location: H.Location<T>) {
-    this.location = location;
-    this.queryParams = location.search;
+  constructor(params: SearchParams) {
+    this._queryParams = new URLSearchParams({
+      q: params.search,
+      searchBy: params.searchBy,
+      sortBy: params.sortBy
+    });
   }
 
   setSearchBy(searchBy: SearchBy) {
@@ -35,8 +27,12 @@ class SearchManager<T> {
     return {
       search: this._queryParams.get('q'),
       searchBy: this._queryParams.get('searchBy') as SearchBy || SearchBy.Title,
-      sortBy: this._queryParams.get('sortBy') as SortBy || SortBy.Release,
+      sortBy: this._queryParams.get('sortBy') as SortBy || SortBy.Release
     };
+  }
+
+  getQueryString(): string {
+    return this._queryParams.toString();
   }
 }
 
