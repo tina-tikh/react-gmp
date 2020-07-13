@@ -3,16 +3,24 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "es6",
-    "jsx": "react",
+    "jsx": "preserve",
     "lib": ["es5", "es6", "dom"],
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "isolatedModules": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./lib/**/*"],
   "awesomeTypescriptLoaderOptions": {
     "reportFiles": ["./src/**/*"]
-  }
+  },
+  "exclude": ["node_modules"]
 }

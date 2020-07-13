@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
 
 import { AppState, getSearchMovies, getSearchTotal } from '../../store';
-import { thunkReceiveMovies } from '../../thunks';
-import { Movie, SearchBy, SortBy } from '../../api';
+import { Movie, SearchBy, SearchParams, SortBy } from '../../api';
 import { ActionBar, ActionBarCaption, Header, Main, MainMessage } from '../layout';
 import { ToggleGroup } from '../form';
 import FilmList from '../FilmList';
@@ -14,10 +12,10 @@ import SearchCaption from './SearchCaption';
 import SearchHeader from './SearchHeader';
 import SearchManager from './SearchManager';
 
-interface SearchProps extends RouteComponentProps<any> {
+interface SearchProps {
   movies: Movie[],
   total: number,
-  thunkReceiveMovies: typeof thunkReceiveMovies
+  params: SearchParams
 }
 
 class Search extends Component<SearchProps> {
@@ -25,18 +23,11 @@ class Search extends Component<SearchProps> {
 
   constructor(props: SearchProps) {
     super(props);
-    this.searchManager = new SearchManager(props.location);
-  }
-
-  componentDidUpdate(prevProps: Readonly<SearchProps>) {
-    if (this.props.location !== prevProps.location) {
-      const params = this.searchManager.getSearchParamsObj();
-      this.props.thunkReceiveMovies(params);
-    }
+    this.searchManager = new SearchManager(props.params);
   }
 
   render(): ReactNode {
-    const params = this.searchManager.getSearchParamsObj();
+    const params = this.props.params;
     const total = this.props.total;
     const movies = this.props.movies;
 
@@ -91,7 +82,8 @@ class Search extends Component<SearchProps> {
   }
 
   refresh(): void {
-    this.props.history.push('/search?' + this.searchManager.queryParams);
+    history.pushState('', '', '/search?' + this.searchManager.getQueryString());
+    history.go();
   }
 }
 
@@ -101,6 +93,5 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 export default connect(
-  mapStateToProps,
-  { thunkReceiveMovies }
+  mapStateToProps
 )(Search);
