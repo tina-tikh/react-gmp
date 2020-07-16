@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 
 import { AppState, getSearchMovies, getSearchTotal } from '../../store';
 import { thunkReceiveMovies } from '../../thunks';
-import { Movie, SearchBy, SortBy } from '../../api';
+import { SearchBy, SortBy } from '../../api';
 import { ActionBar, ActionBarCaption, Header, Main, MainMessage } from '../layout';
 import { ToggleGroup } from '../form';
 import FilmList from '../FilmList';
@@ -15,7 +15,7 @@ import SearchHeader from './SearchHeader';
 import SearchManager from './SearchManager';
 
 interface SearchProps extends RouteComponentProps<any> {
-  movies: Movie[],
+  movies: any,
   total: number,
   thunkReceiveMovies: typeof thunkReceiveMovies
 }
@@ -28,17 +28,20 @@ class Search extends Component<SearchProps> {
     this.searchManager = new SearchManager(props.location);
   }
 
+  componentDidMount(): void {
+    this.refresh();
+  }
+
   componentDidUpdate(prevProps: Readonly<SearchProps>) {
     if (this.props.location !== prevProps.location) {
-      const params = this.searchManager.getSearchParamsObj();
-      this.props.thunkReceiveMovies(params);
+      this.refresh();
     }
   }
 
   render(): ReactNode {
     const params = this.searchManager.getSearchParamsObj();
     const total = this.props.total;
-    const movies = this.props.movies;
+    const movies = this.props.movies.toJS();
 
     return (
       <React.Fragment>
@@ -77,20 +80,25 @@ class Search extends Component<SearchProps> {
 
   handleSearchByChange(searchByValue: string): void {
     this.searchManager.setSearchBy(searchByValue as SearchBy);
-    this.refresh();
+    this.applySearchParams();
   }
 
   handleSortByChange(sortByValue: string): void {
     this.searchManager.setSortBy(sortByValue as SortBy);
-    this.refresh();
+    this.applySearchParams();
   }
 
   handleSubmit(q: string): void {
     this.searchManager.setQuery(q);
-    this.refresh();
+    this.applySearchParams();
   }
 
   refresh(): void {
+    const params = this.searchManager.getSearchParamsObj();
+    this.props.thunkReceiveMovies(params);
+  }
+
+  applySearchParams(): void {
     this.props.history.push('/search?' + this.searchManager.queryParams);
   }
 }

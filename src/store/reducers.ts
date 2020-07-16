@@ -1,82 +1,50 @@
-import {
-  ActionTypes,
-  MOVIE_RECEIVE,
-  MOVIE_UPDATE,
-  MOVIES_RECEIVE,
-  MOVIES_RECEIVE_SIMILAR,
-  MoviesState,
-  SelectedMovieState,
-} from './types';
+import { fromJS, List } from 'immutable';
 
-const initialMoviesState: MoviesState = {
+import { ActionTypes, MOVIE_SELECT, MOVIE_UPDATE, MOVIES_RECEIVE, MOVIES_RECEIVE_SIMILAR, } from './types';
+
+const initialMoviesState = fromJS({
   cache: {},
   search: {
     moviesIds: [],
     total: 0
   }
-};
+});
 
-const initialSelectedMovieState: SelectedMovieState = {
+const initialSelectedMovieState = fromJS({
   movieId: null,
   similar: {
     moviesIds: [],
     total: 0
   }
-};
+});
 
-const moviesReducer = (state = initialMoviesState, action: ActionTypes): MoviesState => {
+const cacheMovies = (state: typeof initialMoviesState, data: List<Map<string, unknown>>) => data
+  .reduce((acc, next) => acc
+  .setIn(['cache', next.get('id')], next), state);
+
+const moviesReducer = (state = initialMoviesState, action: ActionTypes): Map<string, unknown> => {
   switch (action.type) {
     case MOVIES_RECEIVE:
-      return {
-        search: {
-          total: action.payload.total,
-          moviesIds: action.payload.data.map((movie) => movie.id)
-        },
-        cache: action.payload.data.reduce((acc, next) => {
-          return {
-            ...acc,
-            [next.id]: next
-          };
-        }, { ...state.cache })
-      };
+      return cacheMovies(state, fromJS(action.payload.data))
+        .setIn(['search', 'total'], action.payload.total)
+        .setIn(['search', 'moviesIds'], fromJS(action.payload.data.map((movie) => movie.id)));
     case MOVIES_RECEIVE_SIMILAR:
-      return {
-        ...state,
-        cache: action.payload.data.reduce((acc, next) => {
-          return {
-            ...acc,
-            [next.id]: next
-          };
-        }, { ...state.cache })
-      };
+      return cacheMovies(state, fromJS(action.payload.data));
     case MOVIE_UPDATE:
-      return {
-        ...state,
-        cache: {
-          ...state.cache,
-          [action.payload.id]: action.payload
-        }
-      };
+      return state.mergeIn(['cache', action.payload.id], fromJS(action.payload));
     default:
       return state;
   }
 };
 
-const selectedMovieReducer = (state: SelectedMovieState = initialSelectedMovieState, action: ActionTypes): SelectedMovieState => {
+const selectedMovieReducer = (state = initialSelectedMovieState, action: ActionTypes): Map<string, unknown> => {
   switch (action.type) {
-    case MOVIE_RECEIVE:
-      return {
-        ...state,
-        movieId: action.payload
-      };
+    case MOVIE_SELECT:
+      return state.set('movieId', action.payload);
     case MOVIES_RECEIVE_SIMILAR:
-      return {
-        ...state,
-        similar: {
-          moviesIds: action.payload.data.map((movie) => movie.id),
-          total: action.payload.total
-        }
-      };
+      return state
+        .setIn(['similar', 'total'], action.payload.total)
+        .setIn(['similar', 'moviesIds'], fromJS(action.payload.data.map((movie) => movie.id)));
     default:
       return state;
   }

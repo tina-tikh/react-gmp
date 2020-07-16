@@ -4,7 +4,7 @@ import { AppState, getSelectedMovie } from './store';
 import {
   receiveMovies,
   receiveSimilarMovies,
-  receiveMovie,
+  selectMovie,
   updateMovie
 } from './store/actions';
 import { ActionTypes } from './store/types';
@@ -29,7 +29,7 @@ export const thunkReceiveSimilarByGenre = (genre: string): ThunkAction<void, App
 };
 
 export const thunkSelectMovie = (movieId: number): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
-  dispatch(receiveMovie(movieId));
+  dispatch(selectMovie(movieId));
 
   const cachedMovie = getSelectedMovie(getState());
 

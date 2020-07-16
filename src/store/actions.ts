@@ -1,10 +1,4 @@
-import {
-  ActionTypes,
-  MOVIE_RECEIVE,
-  MOVIE_UPDATE,
-  MOVIES_RECEIVE,
-  MOVIES_RECEIVE_SIMILAR
-} from './types';
+import { ActionTypes, MOVIE_SELECT, MOVIE_UPDATE, MOVIES_RECEIVE, MOVIES_RECEIVE_SIMILAR } from './types';
 import { Movie, Movies } from '../api';
 
 export const receiveMovies = (movies: Movies): ActionTypes => ({
@@ -12,8 +6,8 @@ export const receiveMovies = (movies: Movies): ActionTypes => ({
   payload: movies
 });
 
-export const receiveMovie = (opt: number): ActionTypes => ({
-  type: MOVIE_RECEIVE,
+export const selectMovie = (opt: number): ActionTypes => ({
+  type: MOVIE_SELECT,
   payload: opt
 });
 
