@@ -1,4 +1,5 @@
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction } from 'redux-thunk';
+import { Dispatch } from 'redux';
 
 import { AppState, getSelectedMovie } from './store';
 import {
@@ -10,14 +11,14 @@ import {
 import { ActionTypes } from './store/types';
 import { Movie, Movies, MovieService, SearchBy, SearchParams } from './api';
 
-export const thunkReceiveMovies = (opts?: SearchParams): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
+export const thunkReceiveMovies = (opts?: SearchParams): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch: Dispatch): Promise<void> => {
   const movies: Movies = await MovieService.getMovies(opts);
   dispatch(
     receiveMovies(movies)
   );
 };
 
-export const thunkReceiveSimilarByGenre = (genre: string): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
+export const thunkReceiveSimilarByGenre = (genre: string): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch: Dispatch): Promise<void> => {
   const opts = {
     search: genre,
     searchBy: SearchBy.Genres
@@ -28,7 +29,7 @@ export const thunkReceiveSimilarByGenre = (genre: string): ThunkAction<void, App
   );
 };
 
-export const thunkSelectMovie = (movieId: number): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch, getState): Promise<void> => {
+export const thunkSelectMovie = (movieId: number): ThunkAction<void, AppState, null, ActionTypes> => async (dispatch: Dispatch, getState: () => AppState): Promise<void> => {
   dispatch(selectMovie(movieId));
 
   const cachedMovie = getSelectedMovie(getState());

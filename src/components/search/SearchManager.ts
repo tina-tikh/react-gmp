@@ -19,15 +19,15 @@ class SearchManager<T> {
     this.queryParams = location.search;
   }
 
-  setSearchBy(searchBy: SearchBy) {
+  setSearchBy(searchBy: SearchBy): void {
     this._queryParams.set("searchBy", searchBy);
   }
 
-  setSortBy(sortBy: SortBy) {
+  setSortBy(sortBy: SortBy): void {
     this._queryParams.set("sortBy", sortBy);
   }
 
-  setQuery(q: string) {
+  setQuery(q: string): void {
     this._queryParams.set("q", q);
   }
 

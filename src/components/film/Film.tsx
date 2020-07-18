@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Component, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { List, Record } from 'immutable';
 
 import { ActionBar, ActionBarCaption, Header, Main } from '../layout';
 import { thunkReceiveSimilarByGenre, thunkSelectMovie } from '../../thunks';
@@ -12,9 +13,9 @@ import FilmDetails from './FilmDetails';
 import { LinkButton } from '../form';
 
 interface FilmProps extends RouteComponentProps<{ id: string }> {
-  similar: any,
+  similar: List<Record<Movie>>,
   similarTotal: number,
-  movie: any,
+  movie: Record<Movie>,
   thunkReceiveSimilarByGenre: typeof thunkReceiveSimilarByGenre
   thunkSelectMovie: typeof thunkSelectMovie
 }

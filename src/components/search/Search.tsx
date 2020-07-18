@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Component, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { List, Record } from 'immutable';
 
-import { AppState, getSearchMovies, getSearchTotal } from '../../store';
+import { AppState, getSearchMovies, getSearchMoviesTotal } from '../../store';
 import { thunkReceiveMovies } from '../../thunks';
-import { SearchBy, SortBy } from '../../api';
+import { Movie, SearchBy, SortBy } from '../../api';
 import { ActionBar, ActionBarCaption, Header, Main, MainMessage } from '../layout';
 import { ToggleGroup } from '../form';
 import FilmList from '../FilmList';
@@ -14,14 +15,14 @@ import SearchCaption from './SearchCaption';
 import SearchHeader from './SearchHeader';
 import SearchManager from './SearchManager';
 
-interface SearchProps extends RouteComponentProps<any> {
-  movies: any,
+interface SearchProps extends RouteComponentProps {
+  movies: List<Record<Movie>>,
   total: number,
   thunkReceiveMovies: typeof thunkReceiveMovies
 }
 
 class Search extends Component<SearchProps> {
-  private searchManager: SearchManager<any>;
+  private searchManager: SearchManager<unknown>;
 
   constructor(props: SearchProps) {
     super(props);
@@ -105,7 +106,7 @@ class Search extends Component<SearchProps> {
 
 const mapStateToProps = (state: AppState) => ({
   movies: getSearchMovies(state),
-  total: getSearchTotal(state)
+  total: getSearchMoviesTotal(state)
 });
 
 export default connect(

@@ -1,8 +1,17 @@
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Record } from 'immutable';
 
-import { ActionTypes, MOVIE_SELECT, MOVIE_UPDATE, MOVIES_RECEIVE, MOVIES_RECEIVE_SIMILAR, } from './types';
+import {
+  ActionTypes,
+  MOVIE_SELECT,
+  MOVIE_UPDATE,
+  MOVIES_RECEIVE,
+  MOVIES_RECEIVE_SIMILAR,
+  MoviesState,
+  SelectedMovieState,
+} from './types';
+import { Movie } from '../api/models';
 
-const initialMoviesState = fromJS({
+const initialMoviesState: Record<MoviesState> = fromJS({
   cache: {},
   search: {
     moviesIds: [],
@@ -10,7 +19,7 @@ const initialMoviesState = fromJS({
   }
 });
 
-const initialSelectedMovieState = fromJS({
+const initialSelectedMovieState: Record<SelectedMovieState> = fromJS({
   movieId: null,
   similar: {
     moviesIds: [],
@@ -18,11 +27,11 @@ const initialSelectedMovieState = fromJS({
   }
 });
 
-const cacheMovies = (state: typeof initialMoviesState, data: List<Map<string, unknown>>) => data
+const cacheMovies = (state: Record<MoviesState>, data: List<Record<Movie>>) => data
   .reduce((acc, next) => acc
   .setIn(['cache', next.get('id')], next), state);
 
-const moviesReducer = (state = initialMoviesState, action: ActionTypes): Map<string, unknown> => {
+const moviesReducer = (state = initialMoviesState, action: ActionTypes): Record<MoviesState> => {
   switch (action.type) {
     case MOVIES_RECEIVE:
       return cacheMovies(state, fromJS(action.payload.data))
@@ -37,7 +46,7 @@ const moviesReducer = (state = initialMoviesState, action: ActionTypes): Map<str
   }
 };
 
-const selectedMovieReducer = (state = initialSelectedMovieState, action: ActionTypes): Map<string, unknown> => {
+const selectedMovieReducer = (state = initialSelectedMovieState, action: ActionTypes): Record<SelectedMovieState> => {
   switch (action.type) {
     case MOVIE_SELECT:
       return state.set('movieId', action.payload);
