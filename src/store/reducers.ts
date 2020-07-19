@@ -15,23 +15,26 @@ const initialMoviesState: Record<MoviesState> = fromJS({
   cache: {},
   search: {
     moviesIds: [],
-    total: 0
-  }
+    total: 0,
+  },
 });
 
 const initialSelectedMovieState: Record<SelectedMovieState> = fromJS({
   movieId: null,
   similar: {
     moviesIds: [],
-    total: 0
-  }
+    total: 0,
+  },
 });
 
 const cacheMovies = (state: Record<MoviesState>, data: List<Record<Movie>>) => data
   .reduce((acc, next) => acc
-  .setIn(['cache', next.get('id')], next), state);
+    .setIn(['cache', next.get('id')], next), state);
 
-const moviesReducer = (state = initialMoviesState, action: ActionTypes): Record<MoviesState> => {
+const moviesReducer = (
+  state = initialMoviesState,
+  action: ActionTypes,
+): Record<MoviesState> => {
   switch (action.type) {
     case MOVIES_RECEIVE:
       return cacheMovies(state, fromJS(action.payload.data))
@@ -46,7 +49,10 @@ const moviesReducer = (state = initialMoviesState, action: ActionTypes): Record<
   }
 };
 
-const selectedMovieReducer = (state = initialSelectedMovieState, action: ActionTypes): Record<SelectedMovieState> => {
+const selectedMovieReducer = (
+  state = initialSelectedMovieState,
+  action: ActionTypes,
+): Record<SelectedMovieState> => {
   switch (action.type) {
     case MOVIE_SELECT:
       return state.set('movieId', action.payload);
@@ -63,5 +69,5 @@ export {
   moviesReducer,
   selectedMovieReducer,
   initialMoviesState,
-  initialSelectedMovieState
+  initialSelectedMovieState,
 };

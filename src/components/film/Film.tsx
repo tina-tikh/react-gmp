@@ -4,10 +4,14 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { List, Record } from 'immutable';
 
-import { ActionBar, ActionBarCaption, Header, Main } from '../layout';
+import {
+  ActionBar, ActionBarCaption, Header, Main,
+} from '../layout';
 import { thunkReceiveSimilarByGenre, thunkSelectMovie } from '../../thunks';
 import { Movie } from '../../api';
-import { AppState, getSelectedMovie, getSimilarMovies, getSimilarMoviesTotal } from '../../store';
+import {
+  AppState, getSelectedMovie, getSimilarMovies, getSimilarMoviesTotal,
+} from '../../store';
 import FilmList from '../FilmList';
 import FilmDetails from './FilmDetails';
 import { LinkButton } from '../form';
@@ -28,52 +32,66 @@ const getGenre = (props: Readonly<FilmProps>) => props.movie?.getIn(['genres', 0
 
 class Film extends Component<FilmProps, FilmState> {
   componentDidMount(): void {
-    this.props.thunkSelectMovie(Number(this.props.match.params.id));
+    const { thunkSelectMovie: selectMovie, match } = this.props;
+
+    selectMovie(Number(match.params.id));
   }
 
   componentDidUpdate(prevProps: Readonly<FilmProps>): void {
     const getMovieId = (props: Readonly<FilmProps>) => props.match.params.id;
+    const {
+      thunkSelectMovie: selectMovie,
+      thunkReceiveSimilarByGenre: receiveSimilarByGenre,
+    } = this.props;
 
     if (getMovieId(this.props) !== getMovieId(prevProps)) {
-      this.props.thunkSelectMovie(Number(getMovieId(this.props)));
+      selectMovie(Number(getMovieId(this.props)));
     }
 
     if (getGenre(this.props) !== getGenre(prevProps)) {
-      this.props.thunkReceiveSimilarByGenre(getGenre(this.props))
+      receiveSimilarByGenre(getGenre(this.props));
     }
   }
 
+  handleBackToSearch(): void {
+    const { history } = this.props;
+
+    history.back();
+  }
+
   render(): ReactNode {
+    const { movie, similar } = this.props;
+
     return (
-      <React.Fragment>
+      <>
         <Header>
           <LinkButton onClick={() => this.handleBackToSearch()}>Back to search</LinkButton>
-          <FilmDetails film={this.props.movie?.toJS() as Movie}/>
+          <FilmDetails film={movie?.toJS() as Movie} />
         </Header>
         <Main>
           <ActionBar>
             <ActionBarCaption>
-              Films by {getGenre(this.props)} genre
+              Films by
+              {' '}
+              {getGenre(this.props)}
+              {' '}
+              genre
             </ActionBarCaption>
           </ActionBar>
-          <FilmList films={this.props.similar?.toJS()}/>
+          <FilmList films={similar?.toJS()} />
         </Main>
-      </React.Fragment>
+      </>
     );
-  }
-
-  handleBackToSearch(): void {
-    this.props.history.goBack();
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
   movie: getSelectedMovie(state),
   similar: getSimilarMovies(state),
-  similarTotal: getSimilarMoviesTotal(state)
+  similarTotal: getSimilarMoviesTotal(state),
 });
 
 export default connect(
   mapStateToProps,
-  { thunkReceiveSimilarByGenre, thunkSelectMovie }
+  { thunkReceiveSimilarByGenre, thunkSelectMovie },
 )(Film);

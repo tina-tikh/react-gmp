@@ -1,41 +1,42 @@
-import * as H from 'history';
+import { Location } from 'history';
 
 import { SearchBy, SearchParams, SortBy } from '../../api';
 
-class SearchManager<T> {
-  private location: H.Location<T>;
-  private _queryParams: URLSearchParams;
+class SearchManager {
+  private location: Location;
+
+  private queryParamsBF: URLSearchParams;
 
   public set queryParams(q: string) {
-    this._queryParams = new URLSearchParams(q);
+    this.queryParamsBF = new URLSearchParams(q);
   }
 
   public get queryParams(): string {
-    return this._queryParams.toString();
+    return this.queryParamsBF.toString();
   }
 
-  constructor(location: H.Location<T>) {
+  constructor(location: Location) {
     this.location = location;
     this.queryParams = location.search;
   }
 
   setSearchBy(searchBy: SearchBy): void {
-    this._queryParams.set("searchBy", searchBy);
+    this.queryParamsBF.set('searchBy', searchBy);
   }
 
   setSortBy(sortBy: SortBy): void {
-    this._queryParams.set("sortBy", sortBy);
+    this.queryParamsBF.set('sortBy', sortBy);
   }
 
   setQuery(q: string): void {
-    this._queryParams.set("q", q);
+    this.queryParamsBF.set('q', q);
   }
 
   getSearchParamsObj(): SearchParams {
     return {
-      search: this._queryParams.get('q'),
-      searchBy: this._queryParams.get('searchBy') as SearchBy || SearchBy.Title,
-      sortBy: this._queryParams.get('sortBy') as SortBy || SortBy.Release,
+      search: this.queryParamsBF.get('q'),
+      searchBy: this.queryParamsBF.get('searchBy') as SearchBy || SearchBy.Title,
+      sortBy: this.queryParamsBF.get('sortBy') as SortBy || SortBy.Release,
     };
   }
 }

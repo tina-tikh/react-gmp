@@ -7,7 +7,9 @@ import { List, Record } from 'immutable';
 import { AppState, getSearchMovies, getSearchMoviesTotal } from '../../store';
 import { thunkReceiveMovies } from '../../thunks';
 import { Movie, SearchBy, SortBy } from '../../api';
-import { ActionBar, ActionBarCaption, Header, Main, MainMessage } from '../layout';
+import {
+  ActionBar, ActionBarCaption, Header, Main, MainMessage,
+} from '../layout';
 import { ToggleGroup } from '../form';
 import FilmList from '../FilmList';
 import SearchBox from './SearchBox';
@@ -22,7 +24,7 @@ interface SearchProps extends RouteComponentProps {
 }
 
 class Search extends Component<SearchProps> {
-  private searchManager: SearchManager<unknown>;
+  private searchManager: SearchManager;
 
   constructor(props: SearchProps) {
     super(props);
@@ -34,49 +36,11 @@ class Search extends Component<SearchProps> {
   }
 
   componentDidUpdate(prevProps: Readonly<SearchProps>) {
-    if (this.props.location !== prevProps.location) {
+    const { location } = this.props;
+
+    if (location !== prevProps.location) {
       this.refresh();
     }
-  }
-
-  render(): ReactNode {
-    const params = this.searchManager.getSearchParamsObj();
-    const total = this.props.total;
-    const movies = this.props.movies.toJS();
-
-    return (
-      <React.Fragment>
-        <Header>
-          <SearchHeader>
-            <SearchCaption>Find your movie</SearchCaption>
-            <SearchBox searchValue={params.search}
-                       onSubmit={(e: string) => this.handleSubmit(e)}
-            ></SearchBox>
-            <ToggleGroup
-              label="Search by"
-              value={params.searchBy}
-              values={Object.values(SearchBy)}
-              valueLabels={Object.keys(SearchBy)}
-              onChange={(e: string) => this.handleSearchByChange(e)}
-            ></ToggleGroup>
-          </SearchHeader>
-        </Header>
-        <Main>
-          <ActionBar>
-            <ActionBarCaption>{total} movie found</ActionBarCaption>
-            <ToggleGroup
-              label="Sort by"
-              value={params.sortBy}
-              values={Object.values(SortBy)}
-              valueLabels={Object.keys(SortBy)}
-              onChange={(e: string) => this.handleSortByChange(e)}
-            ></ToggleGroup>
-          </ActionBar>
-          <FilmList films={movies}/>
-          {total === 0 && <MainMessage>No films found</MainMessage>}
-        </Main>
-      </React.Fragment>
-    );
   }
 
   handleSearchByChange(searchByValue: string): void {
@@ -96,20 +60,69 @@ class Search extends Component<SearchProps> {
 
   refresh(): void {
     const params = this.searchManager.getSearchParamsObj();
-    this.props.thunkReceiveMovies(params);
+    const { thunkReceiveMovies: receiveMovies } = this.props;
+
+    receiveMovies(params);
   }
 
   applySearchParams(): void {
-    this.props.history.push('/search?' + this.searchManager.queryParams);
+    const { history } = this.props;
+
+    history.push(`/search?${this.searchManager.queryParams}`);
+  }
+
+  render(): ReactNode {
+    const params = this.searchManager.getSearchParamsObj();
+    const { total, movies: moviesImmutable } = this.props;
+    const movies = moviesImmutable.toJS();
+
+    return (
+      <>
+        <Header>
+          <SearchHeader>
+            <SearchCaption>Find your movie</SearchCaption>
+            <SearchBox
+              searchValue={params.search}
+              onSubmit={(e: string) => this.handleSubmit(e)}
+            />
+            <ToggleGroup
+              label="Search by"
+              value={params.searchBy}
+              values={Object.values(SearchBy)}
+              valueLabels={Object.keys(SearchBy)}
+              onChange={(e: string) => this.handleSearchByChange(e)}
+            />
+          </SearchHeader>
+        </Header>
+        <Main>
+          <ActionBar>
+            <ActionBarCaption>
+              {total}
+              {' '}
+              movie found
+            </ActionBarCaption>
+            <ToggleGroup
+              label="Sort by"
+              value={params.sortBy}
+              values={Object.values(SortBy)}
+              valueLabels={Object.keys(SortBy)}
+              onChange={(e: string) => this.handleSortByChange(e)}
+            />
+          </ActionBar>
+          <FilmList films={movies} />
+          {total === 0 && <MainMessage>No films found</MainMessage>}
+        </Main>
+      </>
+    );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
   movies: getSearchMovies(state),
-  total: getSearchMoviesTotal(state)
+  total: getSearchMoviesTotal(state),
 });
 
 export default connect(
   mapStateToProps,
-  { thunkReceiveMovies }
+  { thunkReceiveMovies },
 )(Search);

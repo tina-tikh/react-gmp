@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Component, ReactNode } from 'react';
 
 import { styled } from '../../theme';
 import { Movie } from '../../api';
@@ -48,29 +47,23 @@ const Overview = styled.div`
   font-size: 2rem;
 `;
 
-class FilmDetails extends Component<FilmDetailsProps> {
-  render(): ReactNode {
-    return (
-      <div>
-        <Poster src={this.props.film?.poster_path} />
-        <div>
-          <Title>
-            {this.props.film?.title}
-            <Vote>{this.props.film?.vote_average}</Vote>
-          </Title>
-          <Info>
-            <span>{this.getYear(this.props.film?.release_date)}</span>
-            <span>{this.props.film?.runtime}</span>
-          </Info>
-          <Overview>{this.props.film?.overview}</Overview>
-        </div>
-      </div>
-    );
-  }
+const getYear = (date: string): number => date && new Date(date).getFullYear();
 
-  getYear(date: string): number {
-    return date && new Date(date).getFullYear();
-  }
-}
+const FilmDetails = ({ film }: FilmDetailsProps) => (
+  <div>
+    <Poster src={film?.poster_path} />
+    <div>
+      <Title>
+        {film?.title}
+        <Vote>{film?.vote_average}</Vote>
+      </Title>
+      <Info>
+        <span>{getYear(film?.release_date)}</span>
+        <span>{film?.runtime}</span>
+      </Info>
+      <Overview>{film?.overview}</Overview>
+    </div>
+  </div>
+);
 
 export default FilmDetails;

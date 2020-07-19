@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ThemeProvider } from 'emotion-theming';
 
 import { styled, theme } from '../../theme';
@@ -11,14 +11,10 @@ const Article = styled.article`
   flex-direction: column;
 `;
 
-class Page extends Component {
-  render(): ReactNode {
-    return (
-      <Article>
-        <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
-      </Article>
-    );
-  }
-}
+const Page = ({ children }: { children: ReactNode }) => (
+  <Article>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  </Article>
+);
 
 export default Page;
