@@ -19,7 +19,8 @@ class Logo extends PureComponent {
   render(): ReactNode {
     return (
       <LogoText to="/">
-        <em>netflix</em>roulette
+        <em>netflix</em>
+        roulette
       </LogoText>
     );
   }

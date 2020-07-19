@@ -1,2 +1,2 @@
-export * from "./movies";
-export * from "./searchParams";
+export * from './movies';
+export * from './searchParams';

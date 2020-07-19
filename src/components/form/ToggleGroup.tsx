@@ -43,29 +43,34 @@ const Toggle = styled(Button)`
 `;
 
 class ToggleGroup extends PureComponent<ToggleGroupProps> {
+  getClassName(item: string): string {
+    const { value } = this.props;
+
+    return item === value ? 'active' : '';
+  }
+
+  handleOnClick(item: string): void {
+    const { onChange } = this.props;
+
+    onChange(item);
+  }
+
   render(): ReactNode {
+    const { label, values, valueLabels } = this.props;
     return (
       <Container>
-        <Label>{this.props.label}</Label>
-        {this.props.values?.map((val, i) => (
+        <Label>{label}</Label>
+        {values?.map((val, i) => (
           <Toggle
             key={val}
             className={`${this.getClassName(val)}`}
             onClick={() => this.handleOnClick(val)}
           >
-            {this.props.valueLabels[i]}
+            {valueLabels[i]}
           </Toggle>
         ))}
       </Container>
     );
-  }
-
-  getClassName(item: string): string {
-    return item === this.props.value ? 'active' : '';
-  }
-
-  handleOnClick(item: string): void {
-    this.props?.onChange(item);
   }
 }
 

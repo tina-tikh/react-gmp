@@ -14,10 +14,7 @@ const ErrorDetails = styled.section`
   font-size: 2rem;
 `;
 
-export default class ErrorBoundary extends Component<
-  unknown,
-  ErrorBoundaryState
-> {
+export default class ErrorBoundary extends Component<unknown, ErrorBoundaryState> {
   constructor(props: unknown) {
     super(props);
     this.state = {
@@ -34,16 +31,19 @@ export default class ErrorBoundary extends Component<
   }
 
   render(): ReactNode {
-    if (this.state.error !== null) {
+    const { children } = this.props;
+    const { error, errorInfo } = this.state;
+
+    if (error !== null) {
       return (
         <Main>
           <MainMessage>Oops! Something went wrong</MainMessage>
-          <ErrorDetails>{this.state.error?.toString()}</ErrorDetails>
-          <ErrorDetails>{this.state.errorInfo.componentStack}</ErrorDetails>
+          <ErrorDetails>{error?.toString()}</ErrorDetails>
+          <ErrorDetails>{errorInfo.componentStack}</ErrorDetails>
         </Main>
       );
     }
 
-    return this.props.children;
+    return children;
   }
 }

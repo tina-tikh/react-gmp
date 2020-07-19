@@ -12,6 +12,8 @@ import { renderWithTheme } from '../../../test';
 import { Movies, SearchBy, SortBy } from '../../api';
 import Search from './Search';
 
+/* eslint-disable react/jsx-props-no-spreading */
+
 describe('<Search />', () => {
   let store: Store;
   let renderResult: RenderResult;
@@ -33,29 +35,30 @@ describe('<Search />', () => {
         runtime: null,
       },
     ],
-    total: 1
+    total: 1,
   };
-  const searchParamsMock: any = {};
   const searchLabels: string[] = Object.keys(SearchBy);
   const sortLabels: string[] = Object.keys(SortBy);
   const propsMock = {
     history: {
-      push: jest.fn()
+      push: jest.fn(),
     } as any,
     location: {} as any,
     match: {} as any,
-  }
+  };
 
   beforeEach(async () => {
     store = mockStore({
-      movies: moviesResponseMock
+      movies: moviesResponseMock,
     });
 
     store.dispatch = jest.fn();
 
-    renderResult = renderWithTheme(<MemoryRouter>
-      <Provider store={store}><Search {...propsMock}/></Provider>
-    </MemoryRouter>);
+    renderResult = renderWithTheme(
+      <MemoryRouter>
+        <Provider store={store}><Search {...propsMock} /></Provider>
+      </MemoryRouter>,
+    );
   });
 
   it('should render search', () => {

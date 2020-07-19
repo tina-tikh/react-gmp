@@ -6,11 +6,13 @@ import { Store } from 'redux';
 import thunk from 'redux-thunk';
 import fetch from 'jest-fetch-mock';
 
+import { MemoryRouter } from 'react-router';
 import { renderWithTheme } from '../../../test';
 import { initialSelectedMovieState } from '../../store/reducers';
 import { Movie, Movies } from '../../api';
 import Film from './Film';
-import { MemoryRouter } from 'react-router';
+
+/* eslint-disable react/jsx-props-no-spreading */
 
 describe('<Film />', () => {
   let store: Store;
@@ -21,9 +23,9 @@ describe('<Film />', () => {
     match: {
       params: {
         id: '123',
-      }
+      },
     } as any,
-  }
+  };
 
   const moviesResponseMock: Movies = { data: [], total: 0 };
   const movieMock: Movie = {
@@ -44,7 +46,7 @@ describe('<Film />', () => {
   beforeEach(() => {
     store = mockStore({
       movies: moviesResponseMock,
-      selectedMovie: initialSelectedMovieState
+      selectedMovie: initialSelectedMovieState,
     });
 
     fetch.resetMocks();
@@ -53,12 +55,14 @@ describe('<Film />', () => {
 
   it('should render a film', async () => {
     fetch.mockResponse((req) => Promise.resolve(JSON.stringify(
-      req.url.endsWith(propsMock.match.params.id) ? movieMock : moviesResponseMock
+      req.url.endsWith(propsMock.match.params.id) ? movieMock : moviesResponseMock,
     )));
 
-    const { asFragment } = renderWithTheme(<MemoryRouter>
-      <Provider store={store}><Film {...propsMock}/></Provider>
-    </MemoryRouter>);
+    const { asFragment } = renderWithTheme(
+      <MemoryRouter>
+        <Provider store={store}><Film {...propsMock} /></Provider>
+      </MemoryRouter>,
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 });

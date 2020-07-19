@@ -1,9 +1,15 @@
 import ErrorBoundary from './ErrorBoundary';
 import FilmList from './FilmList';
 import NotFound from './NotFound';
+import Film from './film';
+import Search from './search';
 
-export { ErrorBoundary, FilmList, NotFound };
 export * from './form';
 export * from './layout';
-export * from './film';
-export * from './search';
+export {
+  ErrorBoundary,
+  Film,
+  FilmList,
+  NotFound,
+  Search,
+};

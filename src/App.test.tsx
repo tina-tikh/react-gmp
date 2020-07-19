@@ -16,7 +16,7 @@ describe('<App />', () => {
   beforeEach(() => {
     store = mockStore({
       movies: initialMoviesState,
-      selectedMovie: initialSelectedMovieState
+      selectedMovie: initialSelectedMovieState,
     });
   });
 
@@ -24,10 +24,11 @@ describe('<App />', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/random']}>
         <Provider store={store}>
-          <App/>
+          <App />
         </Provider>
-      </MemoryRouter>);
+      </MemoryRouter>,
+    );
 
-    expect(getByText("404 not found")).toBeInTheDocument();
+    expect(getByText('404 not found')).toBeInTheDocument();
   });
 });

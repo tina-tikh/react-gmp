@@ -14,7 +14,7 @@ class Footer extends PureComponent {
   render(): ReactNode {
     return (
       <FooterBlock>
-        <Logo></Logo>
+        <Logo />
       </FooterBlock>
     );
   }

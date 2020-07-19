@@ -40,21 +40,6 @@ const SearchButton = styled(Button)`
 class SearchBox extends PureComponent<SearchBoxProps> {
   private inputRef: RefObject<HTMLInputElement> = React.createRef();
 
-  render(): ReactNode {
-    return (
-      <Container>
-        <Input ref={this.inputRef}
-               placeholder="Search"
-               defaultValue={this.props.searchValue}
-               onKeyDown={(e) => this.handleKeyDown(e)}
-        ></Input>
-        <SearchButton onClick={() => this.handleOnSubmit()}>
-          Search
-        </SearchButton>
-      </Container>
-    );
-  }
-
   handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -64,7 +49,27 @@ class SearchBox extends PureComponent<SearchBoxProps> {
   }
 
   handleOnSubmit(): void {
-    this.props.onSubmit(this.inputRef.current.value);
+    const { current: { value } } = this.inputRef;
+    const { onSubmit } = this.props;
+
+    onSubmit(value);
+  }
+
+  render(): ReactNode {
+    const { searchValue } = this.props;
+    return (
+      <Container>
+        <Input
+          ref={this.inputRef}
+          placeholder="Search"
+          defaultValue={searchValue}
+          onKeyDown={(e) => this.handleKeyDown(e)}
+        />
+        <SearchButton onClick={() => this.handleOnSubmit()}>
+          Search
+        </SearchButton>
+      </Container>
+    );
   }
 }
 

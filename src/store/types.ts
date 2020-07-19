@@ -1,25 +1,29 @@
+import { List, Record } from 'immutable';
+
 import { Movie, Movies, SearchParams } from '../api';
 
+export type MovieCache = Record<{
+  [key: number]: Record<Movie>;
+}>;
+
 export interface PagedMovies {
-  moviesIds: number[],
+  moviesIds: List<number>,
   total: number
 }
 
 export interface MoviesState {
-  cache: {
-    [key: number]: Movie;
-  },
-  search: PagedMovies
+  cache: MovieCache,
+  search: Record<PagedMovies>
 }
 
 export interface SelectedMovieState {
   movieId: number,
-  similar: PagedMovies
+  similar: Record<PagedMovies>
 }
 
 export const MOVIES_RECEIVE = 'MOVIES_RECEIVE';
 export const MOVIES_SEARCH = 'MOVIES_SEARCH';
-export const MOVIE_RECEIVE = 'MOVIE_RECEIVE';
+export const MOVIE_SELECT = 'MOVIE_SELECT';
 export const MOVIE_UPDATE = 'MOVIE_UPDATE';
 export const MOVIES_RECEIVE_SIMILAR = 'MOVIES_RECEIVE_SIMILAR';
 
@@ -34,7 +38,7 @@ interface SearchMoviesAction {
 }
 
 interface SelectMovie {
-  type: typeof MOVIE_RECEIVE;
+  type: typeof MOVIE_SELECT;
   payload: number;
 }
 

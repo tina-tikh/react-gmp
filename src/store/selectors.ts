@@ -1,19 +1,47 @@
-import { AppState } from './index';
-import { Movie } from '../api/models';
+import { createSelector } from 'reselect';
+import { List, Record } from 'immutable';
 
-export const getSearchMovies = (state: AppState): Movie[] => {
-  return state.movies.search?.moviesIds.map((id) => state.movies.cache[id]);
-};
+import { MovieCache, MoviesState, SelectedMovieState } from './types';
+import { AppState } from './configureStore';
 
-export const getSearchTotal = (state: AppState): number => {
-  return state.movies.search?.total;
-};
+const getFromCache = (ids: List<number>, cache: MovieCache) => ids.map((id) => cache.get(id));
 
-export const getSimilarMovies = (state: AppState) => {
-  return state.selectedMovie.similar.moviesIds.map((id) => state.movies.cache[id]);
-};
+export const getMoviesState = (state: AppState): Record<MoviesState> => state.movies;
+export const getSelectedMovieState = (
+  state: AppState,
+): Record<SelectedMovieState> => state.selectedMovie;
 
-export const getSelectedMovie = (state: AppState) => {
-  const id = state.selectedMovie.movieId;
-  return id && state.movies.cache[id];
-};
+export const getMovies = createSelector(
+  [getMoviesState],
+  (movies) => movies.get('search'),
+);
+export const getCache = createSelector(
+  [getMoviesState],
+  (movies) => movies.get('cache'),
+);
+export const getSearchMoviesIds = createSelector(
+  [getMovies],
+  (movies) => movies.get('moviesIds'),
+);
+export const getSearchMoviesTotal = createSelector(
+  [getMovies],
+  (movies) => movies.get('total'),
+);
+export const getSimilarMoviesIds = createSelector(
+  [getSelectedMovieState],
+  (movies) => movies.getIn(['similar', 'moviesIds']),
+);
+export const getSimilarMoviesTotal = createSelector(
+  [getSelectedMovieState],
+  (movies) => movies.getIn(['similar', 'total']),
+);
+export const getSelectedMovieId = createSelector(
+  [getSelectedMovieState],
+  (movies) => movies.get('movieId'),
+);
+export const getSearchMovies = createSelector([getSearchMoviesIds, getCache], getFromCache);
+export const getSimilarMovies = createSelector([getSimilarMoviesIds, getCache], getFromCache);
+export const getSelectedMovie = createSelector(
+  [getSelectedMovieId, getCache],
+  (id, cache) => cache.get(id),
+);
